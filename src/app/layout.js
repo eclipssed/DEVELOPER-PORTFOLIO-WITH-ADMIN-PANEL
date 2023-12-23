@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className="scroll-smooth scrollbar-thumb-secondary scrollbar-track-[#121212] scrollbar-thin scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
+      className="scroll-smooth scrollbar-thumb-secondary scrollbar-track-dark scrollbar-thin scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
     >
       <Toaster position="top-center" reverseOrder={false} />
       <body className={inter.className}>{children}</body>
