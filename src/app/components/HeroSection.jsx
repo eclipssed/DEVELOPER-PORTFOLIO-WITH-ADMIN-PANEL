@@ -62,8 +62,8 @@ const HeroSection = () => {
             <Image
               src="/images/about-image.jpg"
               className="rounded-md"
-              width={350}
-              height={350}
+              width={450}
+              height={450}
               alt="hero-image"
             />
           </motion.div>
