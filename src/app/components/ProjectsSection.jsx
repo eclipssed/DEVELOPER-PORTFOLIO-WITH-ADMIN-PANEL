@@ -74,7 +74,6 @@ const ProjectsSection = () => {
 
   const handleSelect = (tagName) => {
     setIsSelected(tagName);
-    ref.current = null;
   };
   useEffect(() => {
     setFilteredProject(
@@ -128,7 +127,6 @@ const ProjectsSection = () => {
             initial="initial"
             animate={isInView ? "animate" : "initial"}
             transition={{ duration: 0.5, delay: index * 0.4 }}
-            className=""
           >
             <ProjectCard
               key={project.id}

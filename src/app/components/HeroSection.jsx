@@ -37,8 +37,10 @@ const HeroSection = () => {
             />
           </h1>
           <p className="text-[#adb7be] mb-6 lg:text-xl text-base sm:text-lg">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi,
-            eius.
+            Hello there! I'm Full Stack Developer, I bring a fusion of expertise
+            in Node.js, React JS, and the immersive world of Next.js. Crafting
+            seamless experiences and shaping interactive web landscapes is not
+            just my profession—it's my passion.
           </p>
           <div>
             <button className="px-6 py-3 w-full sm:w-fit bg-gradient-to-br hover:bg-gradient-to-br font-semibold hover:from-secondary hover:to-secondary from-primary to-secondary hover:bg-slate-200 rounded-full text-white mr-4">
