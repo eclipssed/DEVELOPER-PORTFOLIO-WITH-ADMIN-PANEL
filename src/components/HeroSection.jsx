@@ -43,7 +43,9 @@ const HeroSection = () => {
             just my profession—it's my passion.
           </p>
           <div>
-            <button className="btn-primary">Hire Me</button>
+            <a href="/contact">
+              <button className="btn-primary">Hire Me</button>
+            </a>
             <button className="btn-secondary">
               <a
                 href="/CV/MUHAMMAD FURQAN CV.pdf"

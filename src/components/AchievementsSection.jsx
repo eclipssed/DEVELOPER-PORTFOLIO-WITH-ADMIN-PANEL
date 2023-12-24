@@ -40,14 +40,13 @@ const AchievementsSection = () => {
               className="flex flex-col gap-2 items-center justify-center mx-4"
             >
               <h2 className="text-white text-4xl font-bold flex items-center justify-center">
-                {achievement.prefix}
                 <AnimatedNumbers
                   key={achievement.metric}
                   includeComma
                   animateToNumber={parseInt(achievement.value)}
                   transitions={(index) => ({
                     type: "spring",
-                    duration: index + 0.3,
+                    duration: index + 0.4,
                   })}
                   locale="en-US"
                   configs={(_, index) => {
