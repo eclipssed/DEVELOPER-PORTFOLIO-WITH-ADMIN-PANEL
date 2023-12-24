@@ -61,9 +61,6 @@ const projectsData = [
 ];
 
 const ProjectsSection = () => {
-  const [isSelected, setIsSelected] = useState("all");
-  const [filteredProject, setFilteredProject] = useState([]);
-
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
@@ -72,50 +69,11 @@ const ProjectsSection = () => {
     animate: { y: 0, opacity: 1 },
   };
 
-  const handleSelect = (tagName) => {
-    setIsSelected(tagName);
-  };
-  useEffect(() => {
-    setFilteredProject(
-      projectsData.filter((project) => project.tags.includes(isSelected))
-    );
-  }, [isSelected]);
+  const filteredProject = projectsData.slice(0, 6);
 
   return (
     <section id="projects" className=" text-center ">
-      <h2 className="text-4xl mb-4 text-white font-bold">My Projects</h2>
-      <div className="flex justify-center flex-wrap items-center text-white py-6 gap-2">
-        <button
-          onClick={() => handleSelect("all")}
-          className={`px-8 py-3 rounded-full border-2 ${
-            isSelected === "all"
-              ? " border-secondary text-white"
-              : "border-slate-500 text-[#adb7be]  hover:border-white hover:text-white"
-          }   font-semibold text-xl cursor-pointer `}
-        >
-          All
-        </button>
-        <button
-          onClick={() => handleSelect("react.js")}
-          className={`px-8 py-3 rounded-full border-2 ${
-            isSelected === "react.js"
-              ? " border-secondary text-white"
-              : "border-slate-500 text-[#adb7be]  hover:border-white hover:text-white"
-          }   font-semibold text-xl cursor-pointer `}
-        >
-          React JS
-        </button>
-        <button
-          onClick={() => handleSelect("next.js")}
-          className={`px-8 py-3 rounded-full border-2 ${
-            isSelected === "next.js"
-              ? " border-secondary  text-white"
-              : "border-slate-500 text-[#adb7be]  hover:border-white hover:text-white"
-          }   font-semibold text-xl cursor-pointer `}
-        >
-          Next.js
-        </button>
-      </div>
+      <h2 className="text-4xl mb-4 text-white font-bold">My Recent Projects</h2>
       <ul
         ref={ref}
         className="mt-8 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8"
@@ -139,6 +97,11 @@ const ProjectsSection = () => {
           </motion.li>
         ))}
       </ul>
+      <div className="max-w-md  mx-auto ">
+        <button className="btn-primary mt-8 min-w-full">
+          <a href="/projects">See All Projects</a>
+        </button>
+      </div>
     </section>
   );
 };

@@ -8,15 +8,15 @@ import { FaXmark } from "react-icons/fa6";
 
 const navLinks = [
   {
-    href: "#about",
+    href: "/about",
     title: "About",
   },
   {
-    href: "#projects",
+    href: "/projects",
     title: "Projects",
   },
   {
-    href: "#contact",
+    href: "/contact",
     title: "Contact",
   },
 ];

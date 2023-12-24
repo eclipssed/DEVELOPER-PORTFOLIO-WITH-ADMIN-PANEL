@@ -73,7 +73,7 @@ const AboutSection = () => {
           <Image
             src={"/images/hero1.jpg"}
             width={500}
-            className="mx-auto"
+            className="mx-auto rounded-md"
             height={500}
             alt="about-image"
           />

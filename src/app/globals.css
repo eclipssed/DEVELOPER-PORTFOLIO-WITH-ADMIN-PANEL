@@ -25,3 +25,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.btn-primary {
+  @apply px-6 py-3 w-full sm:w-fit bg-gradient-to-br hover:bg-gradient-to-br font-semibold hover:from-secondary hover:to-secondary from-primary to-secondary hover:bg-slate-200 rounded-full text-white mr-4;
+}
+
+.btn-secondary {
+  @apply px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br hover:bg-gradient-to-br font-semibold hover:from-secondary hover:to-secondary from-primary to-secondary bg-transparent  mt-3;
+}

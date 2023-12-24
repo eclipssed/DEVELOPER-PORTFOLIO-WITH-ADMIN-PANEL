@@ -43,13 +43,15 @@ const HeroSection = () => {
             just my profession—it's my passion.
           </p>
           <div>
-            <button className="px-6 py-3 w-full sm:w-fit bg-gradient-to-br hover:bg-gradient-to-br font-semibold hover:from-secondary hover:to-secondary from-primary to-secondary hover:bg-slate-200 rounded-full text-white mr-4">
-              Hire Me
-            </button>
-            <button className="px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br hover:bg-gradient-to-br font-semibold hover:from-secondary hover:to-secondary from-primary to-secondary bg-transparent  mt-3">
-              <span className="block bg-[#121212] rounded-full px-5 py-2">
+            <button className="btn-primary">Hire Me</button>
+            <button className="btn-secondary">
+              <a
+                href="/CV/MUHAMMAD FURQAN CV.pdf"
+                download={true}
+                className="block bg-[#121212] rounded-full px-5 py-2"
+              >
                 Download CV
-              </span>
+              </a>
             </button>
           </div>
         </motion.div>
