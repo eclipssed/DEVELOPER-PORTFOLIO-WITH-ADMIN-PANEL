@@ -6,6 +6,15 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary: #0bb2d2;
+  --secondary: #7b2de7;
+  --dark: #121212;
+  --light: #adb7be;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,4 +41,8 @@ body {
 
 .btn-secondary {
   @apply px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br hover:bg-gradient-to-br font-semibold hover:from-secondary hover:to-secondary from-primary to-secondary bg-transparent  mt-3;
+}
+
+.input {
+  @apply bg-[#18191e] border border-[#33353f] placeholder-[#9ca2a9] text-gray-100 text-sm rounded-lg block  w-full p-2.5;
 }
