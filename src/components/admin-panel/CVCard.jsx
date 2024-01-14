@@ -10,7 +10,7 @@ const CVCard = ({ href, handleFileChange }) => {
         <a
           href={href}
           download={true}
-          className="block bg-dark rounded-full px-5 py-2"
+          className="block bg-transparent rounded-full px-5 py-2"
         >
           Download CV
         </a>

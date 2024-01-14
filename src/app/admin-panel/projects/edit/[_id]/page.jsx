@@ -19,7 +19,7 @@ const newPage = ({ params }) => {
   const fetchProject = async () => {
     const res = await axios.put("/api/admin-panel/project", { _id });
     const data = res.data;
-    console.log(data);
+    // console.log(data);
     setProject((prev) => ({ ...prev, ...data }));
   };
 
@@ -27,7 +27,7 @@ const newPage = ({ params }) => {
     fetchProject();
   }, []);
 
-  console.log(project);
+  // console.log(project);
 
   const handleImagechange = (e) => {
     const file = e.target.files[0];

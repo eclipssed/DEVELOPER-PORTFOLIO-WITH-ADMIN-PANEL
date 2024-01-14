@@ -5,7 +5,7 @@ export const getAnimation = async () => {
   try {
     connectMongoDB();
     const animation = await Animation.find();
-    console.log(animation);
+    // console.log(animation);
     return animation;
   } catch (error) {
     console.log("An error occured while fetching animation.");

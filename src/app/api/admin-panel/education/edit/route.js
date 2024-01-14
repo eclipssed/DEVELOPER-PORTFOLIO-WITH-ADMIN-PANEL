@@ -13,12 +13,12 @@ export async function PUT(req) {
     );
     return NextResponse.json({
       status: 200,
-      message: "skill updated successfully",
+      message: "Education updated successfully",
     });
   } catch (error) {
     return NextResponse.json({
       status: 500,
-      message: "Couldn't update skill",
+      message: "Couldn't update education",
     });
   }
 }

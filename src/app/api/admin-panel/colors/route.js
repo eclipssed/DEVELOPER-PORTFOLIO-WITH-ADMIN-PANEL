@@ -6,10 +6,10 @@ export async function PUT(req) {
   try {
     const updatingColors = await req.json();
     const _id = "658939fb5faa11030a8ea0d0";
-    console.log(updatingColors);
+    // console.log(updatingColors);
 
     const updatedColors = await Colors.updateMany({ _id }, updatingColors);
-    console.log(updatedColors);
+    // console.log(updatedColors);
 
     return Response.json({ status: 200, updatedColors });
   } catch (error) {

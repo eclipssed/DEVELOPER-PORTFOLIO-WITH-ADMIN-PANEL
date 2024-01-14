@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import ColorPickerInput from '../../../components/admin-panel/ColorPickerInput'
+import ColorPickerInput from "../../../components/admin-panel/ColorPickerInput";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -62,13 +62,13 @@ const colorsPage = () => {
         <ColorPickerInput
           handleColorChange={handleColorChange}
           currentColor={currentColor.dark}
-          title={"Dark Color"}
+          title={"Background Color"}
           name={"dark"}
         />
         <ColorPickerInput
           handleColorChange={handleColorChange}
           currentColor={currentColor.light}
-          title={"Light Color"}
+          title={"Text Color"}
           name={"light"}
         />
       </div>

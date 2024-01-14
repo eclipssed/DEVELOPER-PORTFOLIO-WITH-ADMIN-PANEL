@@ -8,7 +8,7 @@ export async function POST(req) {
     const _id = "658d06db722be4506beafac0";
 
     const updatedLink = await Links.findByIdAndUpdate({_id},updatingLinks);
-    console.log(updatedLink);
+    // console.log(updatedLink);
 
     return Response.json({ status: 200, updatedLink });
   } catch (error) {

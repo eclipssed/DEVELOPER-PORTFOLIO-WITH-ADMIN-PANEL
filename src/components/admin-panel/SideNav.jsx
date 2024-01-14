@@ -70,6 +70,12 @@ const adminOptions = [
     icon: <MdOutlineAnimation />,
     title: "Animations",
   },
+  {
+    id: "achievements",
+    link: "/admin-panel/achievements",
+    icon: <MdOutlineAnimation />,
+    title: "Animations",
+  },
 ];
 
 const SideNav = () => {
@@ -77,7 +83,9 @@ const SideNav = () => {
 
   return (
     <div className="px-6 py-8 sticky top-0 bottom-0 w-80 text-black bg-white h-screen">
-      <h2 className="text-4xl font-extrabold mb-8">Admin Panel</h2>
+      <Link href={"/admin-panel"}>
+        <h2 className="text-4xl font-extrabold mb-8">Admin Panel</h2>
+      </Link>
       <div className="px-4 space-y-4">
         {adminOptions.map((option, index) => {
           const isActive = pathName.includes(option.link);

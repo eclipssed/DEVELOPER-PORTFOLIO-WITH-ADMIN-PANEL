@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AddExperienceInputCard = ({
@@ -13,6 +13,13 @@ const AddExperienceInputCard = ({
   setAddExperience,
   handleAddExperience,
 }) => {
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (edit_id) {
+      setIsEdit(true);
+    }
+  }, []);
   const router = useRouter();
   const handleSetAddSkill = (e) => {
     setAddExperience(e.target.value);
@@ -43,10 +50,8 @@ const AddExperienceInputCard = ({
           Experience
         </label>
         <input
-          value={editExperience ? editExperience : addExperience}
-          onChange={
-            editExperience ? handleSetEditExperience : handleSetAddSkill
-          }
+          value={isEdit ? editExperience : addExperience}
+          onChange={isEdit ? handleSetEditExperience : handleSetAddSkill}
           type="text"
           className="border-2 w-full border-primary p-4 rounded-lg"
           placeholder="Frontend Developer, ABC Corporation, 20XX - 20XX"
@@ -54,10 +59,10 @@ const AddExperienceInputCard = ({
       </div>
       <div className="space-x-2">
         <button
-          onClick={editExperience ? handleEditExperience : handleAddExperience}
+          onClick={isEdit ? handleEditExperience : handleAddExperience}
           className="btn"
         >
-          {editExperience ? "Update" : "Add"}
+          {isEdit ? "Update" : "Add"}
         </button>
       </div>
     </div>

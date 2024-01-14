@@ -22,7 +22,7 @@ const skillsPage = () => {
     );
     if (confirmed) {
       try {
-        console.log(_id);
+        // console.log(_id);
         const res = await axios.patch("/api/admin-panel/skills", { _id });
         if (res.data.status === 200) {
           toast.success(res.data.message);

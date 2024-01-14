@@ -8,7 +8,7 @@ export async function PUT(req) {
     const _id = "658be804a96e8027cc059dd6";
 
     const updatedText = await Text.findByIdAndUpdate({ _id }, updatingText);
-    console.log(updatedText);
+    // console.log(updatedText);
 
     return Response.json({ status: 200, updatedText });
   } catch (error) {

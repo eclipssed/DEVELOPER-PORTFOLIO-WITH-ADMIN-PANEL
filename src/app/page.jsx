@@ -1,5 +1,3 @@
-"use client";
-
 import HeroSection from "../components/landing-page/HeroSection";
 import Navbar from "../components/landing-page/Navbar";
 import Footer from "../components/landing-page/Footer";
@@ -7,54 +5,49 @@ import AchievementsSection from "../components/landing-page/AchievementsSection"
 import AboutSection from "../components/landing-page/AboutSection";
 import ProjectsSection from "../components/landing-page/ProjectsSection";
 import EmailSection from "../components/landing-page/EmailSection";
-import { useEffect, useState } from "react";
-import Loading from "@/components/Loading";
-import axios from "axios";
+import {
+  fetchText,
+  fetchImages,
+  fetchSkills,
+  fetchEducation,
+  fetchExperience,
+  fetchProjects,
+  fetchSocialLinks,
+} from "@/DataFetchingFunctions/constants";
 
-export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [colors, setColors] = useState({
-    primary: "",
-    secondary: "",
-    dark: "",
-    light: "",
-  });
 
-  const updateCSSVariabels = () => {
-    const root = document.documentElement;
-    root.style.setProperty("--primary", colors.primary);
-    root.style.setProperty("--secondary", colors.secondary);
-    root.style.setProperty("--dark", colors.dark);
-    root.style.setProperty("--light", colors.light);
-    setLoading(false);
-  };
-  const fetchColors = async () => {
-    try {
-      const res = await axios("/api/admin-panel/colors");
-      const data = res.data[0];
-      setColors((prev) => ({ ...prev, ...data }));
-      updateCSSVariabels();
-    } catch (error) {
-      console.error("Error fetching colors:", error);
-    }
-  };
-  useEffect(() => {
-    fetchColors();
-  }, [colors]);
-
-  if (loading) {
-    return <Loading />;
-  }
+export default async function Home() {
+  const textData = await fetchText();
+  const imagesData = await fetchImages();
+  const skills = await fetchSkills();
+  const education = await fetchEducation();
+  const experience = await fetchExperience();
+  const projects = await fetchProjects();
+  const socialLinks = await fetchSocialLinks();
+  // console.log(socialLinks);
 
   return (
     <main className="flex min-h-screen flex-col justify-between bg-dark ">
-      <Navbar />
+      <Navbar logo={textData.logo} />
       <div className="container mx-auto px-4 lg:px-16 py-2">
-        <HeroSection />
+        <HeroSection
+          heroText={textData.hero}
+          heroImage={imagesData.hero}
+          heroCV={imagesData.cv}
+        />
         <AchievementsSection />
-        <AboutSection />
-        <ProjectsSection />
-        <EmailSection />
+        <AboutSection
+          aboutImage={imagesData.about}
+          aboutText={textData.about}
+          skills={skills}
+          education={education}
+          experience={experience}
+        />
+        <ProjectsSection projects={projects} />
+        <EmailSection
+          contactText={textData.contact}
+          socialLinks={socialLinks}
+        />
       </div>
       <Footer />
     </main>

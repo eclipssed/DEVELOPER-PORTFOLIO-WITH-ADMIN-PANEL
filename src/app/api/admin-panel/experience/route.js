@@ -24,7 +24,7 @@ export async function GET(req) {
 export async function PATCH(req) {
   try {
     const { _id } = await req.json();
-    console.log(_id);
+    // console.log(_id);
     const experience = await Experience.findByIdAndDelete({ _id });
     return NextResponse.json({
       status: 200,

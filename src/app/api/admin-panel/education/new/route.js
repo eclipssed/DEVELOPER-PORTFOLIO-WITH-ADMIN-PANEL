@@ -8,13 +8,13 @@ export async function POST(req) {
     const data = await req.json();
     const res = await Education.create(data);
     return NextResponse.json({
-      message: "skill added successfully.",
+      message: "Education added successfully.",
       status: 200,
       skillCreated: res,
     });
   } catch (error) {
     return NextResponse.json({
-      message: "Couldn't add new skill",
+      message: "Couldn't add new education",
       status: 500,
     });
   }

@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AddEducationInputCard = ({
@@ -13,6 +13,13 @@ const AddEducationInputCard = ({
   setAddEducation,
   handleAddEducation,
 }) => {
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (edit_id) {
+      setIsEdit(true);
+    }
+  }, []);
   const router = useRouter();
   const handleSetAddSkill = (e) => {
     setAddEducation(e.target.value);
@@ -43,8 +50,8 @@ const AddEducationInputCard = ({
           Education
         </label>
         <input
-          value={editEducation ? editEducation : addEducation}
-          onChange={editEducation ? handleSetEditEduction : handleSetAddSkill}
+          value={isEdit ? editEducation : addEducation}
+          onChange={isEdit ? handleSetEditEduction : handleSetAddSkill}
           type="text"
           className="border-2 w-full border-primary p-4 rounded-lg"
           placeholder="Bachelor of Science in Computer Science, XYZ University, 20XX"
@@ -52,10 +59,10 @@ const AddEducationInputCard = ({
       </div>
       <div className="space-x-2">
         <button
-          onClick={editEducation ? handleEditEducation : handleAddEducation}
+          onClick={isEdit ? handleEditEducation : handleAddEducation}
           className="btn"
         >
-          {editEducation ? "Update" : "Add"}
+          {isEdit ? "Update" : "Add"}
         </button>
       </div>
     </div>

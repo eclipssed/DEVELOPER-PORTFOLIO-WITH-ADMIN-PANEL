@@ -21,7 +21,7 @@ const projectsPage = () => {
     const confirmed = window.confirm(
       "Are you sure that you want to delete the project?"
     );
-    console.log(confirmed);
+    // console.log(confirmed);
     if (confirmed) {
       try {
         const res = await axios.patch("/api/admin-panel/project", { _id });

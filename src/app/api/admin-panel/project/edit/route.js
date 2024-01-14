@@ -11,9 +11,10 @@ export async function PUT(req) {
   const description = data.get("description");
   const githubUrl = data.get("githubUrl");
   const previewUrl = data.get("previewUrl");
-  const tags = data.get("tags");
+  const tagsString = data.get("tags");
   const _id = data.get("_id");
 
+  const tags = tagsString.split(",").map((tag) => tag.trim());
 
   const imagePath = await saveImage(image);
 

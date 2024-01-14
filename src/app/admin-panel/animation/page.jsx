@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const textPage = () => {
+const animationPage = () => {
   const maxWords = 5;
   const [remainingWords, setRemainingWords] = useState(maxWords);
   const [animation, setAnimation] = useState({
@@ -18,7 +18,7 @@ const textPage = () => {
     try {
       const res = await axios("/api/admin-panel/animation");
       const data = res.data?.[0];
-      console.log(data);
+      // console.log(data);
       setAnimation(data);
     } catch (error) {
       console.error("Error fetching images:", error);
@@ -133,4 +133,4 @@ const textPage = () => {
   );
 };
 
-export default textPage;
+export default animationPage;

@@ -24,7 +24,7 @@ export async function PUT(req) {
       { _id },
       updatingAnimationText
     );
-    console.log(updatedAnimationText);
+    // console.log(updatedAnimationText);
 
     return Response.json({ status: 200, updatedAnimationText });
   } catch (error) {

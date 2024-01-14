@@ -7,50 +7,24 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { useInView, motion } from "framer-motion";
 import axios from "axios";
+import { MotionDiv } from "../MotionDiv";
 
-const fetchContactText = async () => {
-  try {
-    const res = await axios("/api/admin-panel/text");
-    const data = res.data[0];
-    return data;
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-  }
-};
-const fetchSocialLinks = async () => {
-  try {
-    const res = await axios("/api/admin-panel/links");
-    const data = res.data[0];
-
-    return data;
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-  }
-};
-
-const EmailSection = () => {
+const EmailSection = ({ contactText, socialLinks }) => {
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
     message: "",
   });
-  const [contactText, setContactText] = useState("");
-  const [socialLinks, setSocialLinks] = useState({
-    github: "",
-    linkedin: "",
-  });
+  // const [contactText, setContactText] = useState("");
+  // const [socialLinks, setSocialLinks] = useState({
+  //   github: "",
+  //   linkedin: "",
+  // });
 
   const formRef = useRef(null);
   const textRef = useRef(null);
   const formInView = useInView(formRef, { once: true });
   const textInView = useInView(textRef, { once: true });
-
-  useEffect(() => {
-    fetchContactText().then((res) => setContactText(res.contact));
-    fetchSocialLinks().then((res) => {
-      setSocialLinks((prev) => ({ ...prev, ...res }));
-    });
-  }, []);
 
   const textVariants = {
     initial: { x: -100, opacity: 0 },
@@ -93,7 +67,7 @@ const EmailSection = () => {
       className="grid md:grid-cols-2 my-12  py-24 gap-4 relative"
     >
       <div className="bg-gradient-radial from-secondary to-transparent rounded-full h-60 w-60 z-0 blur-lg absolute top-full -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
-      <motion.div
+      <MotionDiv
         ref={textRef}
         variants={textVariants}
         initial="initial"
@@ -105,12 +79,7 @@ const EmailSection = () => {
         <h5 className="text-xl font-bold text-white my-2 z-10">
           Let's connect
         </h5>
-        <p className="text-light mb-4 max-w-md">
-          {contactText}
-          {/* I am currently looking for new opportunities, my inbox is always open.
-          Whether you have a question or just want to say hi, I'll try my best
-          to get back to you! */}
-        </p>
+        <p className="text-light mb-4 max-w-md">{contactText}</p>
         <div className="socials flex gap-2">
           <Link href={socialLinks.github}>
             <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-secondary hover:text-white duration-200 ease-linear">
@@ -123,8 +92,8 @@ const EmailSection = () => {
             </div>
           </Link>
         </div>
-      </motion.div>
-      <motion.div
+      </MotionDiv>
+      <MotionDiv
         ref={formRef}
         variants={formVariants}
         initial="initial"
@@ -189,7 +158,7 @@ const EmailSection = () => {
             Send message
           </button>
         </form>
-      </motion.div>
+      </MotionDiv>
     </section>
   );
 };

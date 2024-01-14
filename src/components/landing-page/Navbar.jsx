@@ -5,11 +5,10 @@ import Link from "next/link";
 import NavLink from "./NavLink";
 import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import axios from "axios";
 
 const navLinks = [
   {
-    href: "/landing-page/about",
+    href: "#about",
     title: "About",
   },
   {
@@ -17,32 +16,20 @@ const navLinks = [
     title: "Projects",
   },
   {
-    href: "/landing-page/contact",
+    href: "#contact",
     title: "Contact",
   },
 ];
 
-const fetchNavLogoText = async () => {
-  try {
-    const res = await axios("/api/admin-panel/text");
-    const data = res.data[0];
-    return data;
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-  }
-};
-
-const Navbar = () => {
+const Navbar = ({ logo }) => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [navLogoText, setNavLogoText] = useState("");
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    fetchNavLogoText().then((res) => setNavLogoText(res.logo));
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsSticky(true);
@@ -70,7 +57,7 @@ const Navbar = () => {
       >
         <Link href={"/"} className="text-2xl md:text-5xl font-bold">
           <span className="text-transparent  bg-clip-text bg-gradient-to-r from-primary to-secondary">
-            {navLogoText}
+            {logo}
           </span>
         </Link>
         {/* menu for large devices */}

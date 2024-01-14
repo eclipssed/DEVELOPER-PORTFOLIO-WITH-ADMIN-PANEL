@@ -44,8 +44,8 @@ const ProjectCard = ({
         </div>
       </div>
       <div className=" rounded-xl py-6 px-4">
-        <h2 className="text-xl font-semibold mb-2">{title}</h2>
-        <p className="text-base md:text-lg">{description}</p>
+        <h2 className="text-xl font-semibold mb-2 line-clamp-2">{title}</h2>
+        <p className="text-base md:text-lg line-clamp-2">{description}</p>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ connectMongoDB();
 export async function POST(req) {
   const { username, email, password } = await req.json();
   try {
-    console.log(username, email, password);
+    // console.log(username, email, password);
     const userFound = await User.findOne({ username });
     if (userFound) {
       const validEmail = email === userFound.email;
@@ -24,7 +24,7 @@ export async function POST(req) {
             username: userFound.username,
             email: userFound.email,
           };
-          const token = await jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
+          const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
             expiresIn: "6h",
           });
           const response = NextResponse.json({

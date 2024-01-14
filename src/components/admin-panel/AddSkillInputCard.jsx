@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const AddSkillInputCard = ({
@@ -13,7 +13,15 @@ const AddSkillInputCard = ({
   setAddSkill,
   handleAddSkill,
 }) => {
+  const [isEdit, setIsEdit] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (edit_id) {
+      setIsEdit(true);
+    }
+  }, []);
+
   const handleSetAddSkill = (e) => {
     setAddSkill(e.target.value);
   };
@@ -43,8 +51,8 @@ const AddSkillInputCard = ({
           Skill
         </label>
         <input
-          value={editSkill ? editSkill : addSkill}
-          onChange={editSkill ? handleSetEditSkill : handleSetAddSkill}
+          value={isEdit ? editSkill : addSkill}
+          onChange={isEdit ? handleSetEditSkill : handleSetAddSkill}
           type="text"
           className="border-2 mx-4 border-primary p-4 rounded-lg"
           placeholder="Javascript"
@@ -52,10 +60,10 @@ const AddSkillInputCard = ({
       </div>
       <div className="space-x-2">
         <button
-          onClick={editSkill ? handleEditSkill : handleAddSkill}
+          onClick={isEdit ? handleEditSkill : handleAddSkill}
           className="btn"
         >
-          {editSkill ? "Update" : "Add"}
+          {isEdit ? "Update" : "Add"}
         </button>
       </div>
     </div>
