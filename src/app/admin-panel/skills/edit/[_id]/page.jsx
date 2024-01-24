@@ -1,19 +1,19 @@
 "use client";
 
+import { getSingleSkill } from "@/libs/data";
 import AddSkillInputCard from "../../../../../components/admin-panel/AddSkillInputCard";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }) => {
-  const [skill, setSkill] = useState("");
+  const [skill, setSkill] = useState();
   const _id = params;
 
-  const fetchSkill = async () => {
-    const res = await axios.put("/api/admin-panel/skills", { _id });
-    setSkill(res.data.skill.skill);
-  };
   useEffect(() => {
-    fetchSkill();
+    getSingleSkill(_id)
+      .then((data) => JSON.parse(data))
+      .then((data) => {
+        setSkill(data.skill);
+      });
   }, []);
 
   return (

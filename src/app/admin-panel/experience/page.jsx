@@ -1,37 +1,37 @@
 "use client";
 
+import { getExperience } from "@/libs/data";
 import EditExperienceInputCard from "../../../components/admin-panel/EditExperienceInputCard";
-import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { deleteExperience } from "@/libs/admin-panel/actions";
 
 const experiencePage = () => {
   const [experience, setExperience] = useState([]);
-  const fetchExperience = async () => {
-    const res = await axios("/api/admin-panel/experience");
-    setExperience(res.data.experience);
-  };
+
   useEffect(() => {
-    fetchExperience();
+    getExperience()
+      .then((data) => JSON.parse(data))
+      .then((data) => setExperience(data));
   }, []);
 
   const handleDelete = async (_id) => {
     const confirmed = window.confirm(
-      "Are you sure that you want to delete experience."
+      "Are you sure that you want to delete the skill."
     );
     if (confirmed) {
       try {
-        // console.log(_id);
-        const res = await axios.patch("/api/admin-panel/experience", { _id });
-        if (res.data.status === 200) {
-          toast.success(res.data.message);
-          fetchExperience();
-        } else {
-          toast.error(res.data.message);
+        const res = await deleteExperience(_id);
+        if (res) {
+          toast.success("successfully deleted the experience.");
+          getExperience()
+            .then((data) => JSON.parse(data))
+            .then((data) => setExperience(data));
         }
       } catch (error) {
-        toast.error(error);
+        console.log("Error while deleting experience: ", error);
+        toast.error("Error while deleting experience.");
       }
     } else {
       return;

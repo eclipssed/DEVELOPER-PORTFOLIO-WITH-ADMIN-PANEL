@@ -3,10 +3,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getText } from "../../../libs/data";
+import { updateText } from "@/libs/admin-panel/actions";
+import SaveButton from "@/components/admin-panel/SaveButton";
 
 const textPage = () => {
   const maxWords = 100;
-  const [remainingWords, setRemainingWords] = useState(maxWords);
+  const [remainingWords, setRemainingWords] = useState({
+    hero: maxWords,
+    about: maxWords,
+    contact: maxWords,
+  });
+  const [loading, setLoading] = useState(false);
   const [text, setText] = useState({
     logo: "",
     hero: "",
@@ -14,18 +22,10 @@ const textPage = () => {
     contact: "",
   });
 
-  const fetchText = async () => {
-    try {
-      const res = await axios("/api/admin-panel/text");
-      const data = res.data?.[0];
-      setText(data);
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchText();
+    getText()
+      .then((data) => JSON.parse(data))
+      .then((data) => setText(data));
   }, []);
 
   const handleTextChange = (e) => {
@@ -34,36 +34,35 @@ const textPage = () => {
     const wordsLeft = maxWords - wordCount;
     if (wordsLeft >= 0) {
       setText((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-      setRemainingWords(wordsLeft);
+      setRemainingWords((prev) => ({ ...prev, [e.target.name]: wordsLeft }));
     }
   };
 
-  const handleTextUpload = async () => {
+  const handleTextUpdate = async () => {
     try {
-      if (!text.logo || !text.hero || !text.about || !text.contact) {
-        toast.error("All fields are required.");
-        return;
+      const res = await updateText(text);
+      if (res) {
+        toast.success("Successfully updated textFields.");
+        getText()
+          .then((data) => JSON.parse(data))
+          .then((data) => setText(data));
       }
-      const textPromise = new Promise(async (resolve, reject) => {
-        const res = await axios.put("/api/admin-panel/text", text);
-        if (res.data.status === 200) {
-          fetchText();
-          resolve();
-        } else reject();
-      });
-      await toast.promise(textPromise, {
-        loading: "Updating text...",
-        success: "Successfully updated the text.",
-        error: "Couldn't update the text.",
-      });
     } catch (error) {
-      throw error;
+      console.log("Error while updating textFields: ", error);
+      toast.error("Error while updating textFields.");
     }
+    setLoading(false);
   };
   return (
-    <div className="flex flex-col gap-4 rounded-lg wrapper">
+    <form
+      action={handleTextUpdate}
+      onSubmit={() => setLoading(true)}
+      className="flex flex-col gap-4 rounded-lg wrapper"
+    >
       <div className="border-2 border-secondary rounded-lg p-4">
-        <label className="text-2xl font-bold text-black">Nav Logo Text</label>
+        <label className="text-2xl font-bold text-black">
+          Navbar Logo Text
+        </label>
         <input
           required
           onChange={handleTextChange}
@@ -85,7 +84,7 @@ const textPage = () => {
           className="py-4 px-2 w-full rounded-lg border-2 my-4 mx-auto border-primary"
           rows="10"
         ></textarea>
-        <p className="font font-semibold">Words Left: {remainingWords}</p>
+        <p className="font font-semibold">Words Left: {remainingWords.hero}</p>
       </div>
       <div className="border-2 border-secondary rounded-lg p-4">
         <label className="text-2xl font-bold mx-4 text-black">About Text</label>
@@ -98,7 +97,7 @@ const textPage = () => {
           className="py-4 px-2 w-full rounded-lg border-2 my-4 mx-auto border-primary"
           rows="10"
         ></textarea>
-        <p className="font font-semibold">Words Left: {remainingWords}</p>
+        <p className="font font-semibold">Words Left: {remainingWords.about}</p>
       </div>
       <div className="border-2 border-secondary rounded-lg p-4">
         <label className="text-2xl font-bold mx-4 text-black">
@@ -113,14 +112,12 @@ const textPage = () => {
           className="py-4 px-2 w-full rounded-lg border-2 my-4 mx-auto border-primary"
           rows="10"
         ></textarea>
-        <p className="font font-semibold">Words Left: {remainingWords}</p>
+        <p className="font font-semibold">
+          Words Left: {remainingWords.contact}
+        </p>
       </div>
-      <div>
-        <button onClick={handleTextUpload} className="btn">
-          Save
-        </button>
-      </div>
-    </div>
+      <SaveButton loading={loading} />
+    </form>
   );
 };
 

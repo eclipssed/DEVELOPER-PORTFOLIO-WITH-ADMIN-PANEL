@@ -1,58 +1,50 @@
 "use client";
 
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import LinksCard from "../../../components/admin-panel/LinksCard";
+import { getLinks } from "../../../libs/data";
+import { updateLinks } from "@/libs/admin-panel/actions";
+import SaveButton from "@/components/admin-panel/SaveButton";
 
 const linksPage = () => {
+  const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState({
     github: "",
     linkedin: "",
   });
 
-  const fetchLinks = async () => {
-    try {
-      const res = await axios("/api/admin-panel/links");
-      const data = res.data?.[0];
-      setLinks(data);
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchLinks();
+    getLinks()
+      .then((data) => JSON.parse(data))
+      .then((data) => setLinks(data));
   }, []);
 
   const handleLinkChange = (e) => {
     setLinks((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleLinkUpload = async () => {
+  const handleLinksUpdate = async () => {
     try {
-      if (!links.github || !links.linkedin) {
-        toast.error("All fields are required.");
-        return;
+      const res = await updateLinks(links);
+      if (res) {
+        toast.success("Successfully updated links.");
+        getLinks()
+          .then((data) => JSON.parse(data))
+          .then((data) => setLinks(data));
       }
-      const textPromise = new Promise(async (resolve, reject) => {
-        const res = await axios.post("/api/admin-panel/links", links);
-        if (res.data.status === 200) {
-          fetchLinks();
-          resolve();
-        } else reject();
-      });
-      await toast.promise(textPromise, {
-        loading: "Updating links...",
-        success: "Successfully updated the links.",
-        error: "Couldn't update the links.",
-      });
     } catch (error) {
-      throw error;
+      console.log("Error while updating links: ", error.message);
+      toast.error("Error while updating links");
     }
+    setLoading(false);
   };
   return (
-    <div className="flex flex-col gap-4 rounded-lg wrapper">
+    <form
+      action={handleLinksUpdate}
+      onSubmit={() => setLoading(true)}
+      className="flex flex-col gap-4 rounded-lg wrapper"
+    >
       <LinksCard
         onChange={handleLinkChange}
         name={"github"}
@@ -65,12 +57,17 @@ const linksPage = () => {
         linkTitle={"LinkedIn Link"}
         value={links?.linkedin}
       />
-      <div>
-        <button onClick={handleLinkUpload} className="btn">
-          Save
+      <SaveButton loading={loading} />
+      {/* <div>
+        <button
+          disabled={loading ? true : false}
+          type="submit"
+          className={`btn ${loading ? "!bg-slate-500" : ""}`}
+        >
+          {loading ? "Updating..." : "Save"}
         </button>
-      </div>
-    </div>
+      </div> */}
+    </form>
   );
 };
 

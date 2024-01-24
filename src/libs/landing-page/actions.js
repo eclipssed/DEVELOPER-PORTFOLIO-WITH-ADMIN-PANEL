@@ -1,11 +1,13 @@
+"use server";
+
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const fromEmail = process.env.FROM_EMAIL;
 
-export async function POST(req) {
-  const data = await req.json();
-  const { email, subject, message } = data;
+export async function sendEmail(formData) {
+  const { email, subject, message } = formData;
+  console.log(email, subject, message);
   try {
     const response = await resend.emails.send({
       from: fromEmail,
@@ -19,9 +21,9 @@ export async function POST(req) {
         </>
       ),
     });
-
-    return Response.json({ status: 200, response });
-  } catch (error) {
-    throw error;
+    return true;
+  } catch (err) {
+    console.log("Error happened while sending email: ", err);
+    throw err;
   }
 }

@@ -1,40 +1,9 @@
 import Image from "next/image";
 import { MotionDiv } from "@/components/MotionDiv";
 import Link from "next/link";
-
 import AnimationCard from "../../components/landing-page/AnimationCard";
 
-const fetchHeroImages = async () => {
-  try {
-    const response = await fetch(
-      process.env.ROOT_URL + "/api/admin-panel/images"
-    );
-    const res = await response.json();
-    // console.log(res)
-    return res[0];
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-  }
-};
-
-const fetchAnimation = async () => {
-  try {
-    const response = await fetch(
-      process.env.ROOT_URL + "/api/admin-panel/animation"
-    );
-    const res = await response.json();
-    // console.log(res);
-    return res[0];
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-  }
-};
-
-const HeroSection = async ({ heroText, heroImage, heroCV }) => {
-  // const heroData = await fetchHeroImages();
-  const animation = await fetchAnimation();
-  // console.log(heroData, heroText, animation);
-
+const HeroSection = async ({ animation, heroText, heroImage, heroCV }) => {
   return (
     <section className="lg:py-8  p-16 mt-16">
       <div className="grid grid-cols-1 sm:grid-cols-12">

@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import ProjectFormInput from "./ProjectFormInput";
-import axios from "axios";
+import { createProject, updateProject } from "@/libs/admin-panel/actions";
+import SaveButton from "./SaveButton";
 
 const ProjectForm = ({
   editProject,
@@ -12,6 +12,7 @@ const ProjectForm = ({
   onEditImageChange,
   handleEditTagsChange,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [project, setProject] = useState({
     image: "",
     title: "",
@@ -20,7 +21,6 @@ const ProjectForm = ({
     previewUrl: "",
     tags: [],
   });
-  const router = useRouter();
 
   const handleImagechange = (e) => {
     const file = e.target.files[0];
@@ -34,62 +34,47 @@ const ProjectForm = ({
     const tagsArray = eventTags.split(",");
     setProject((prev) => ({ ...prev, [e.target.name]: tagsArray }));
   };
-  const handleCreateSubmit = async (e) => {
-    e.preventDefault();
+  const handleCreateProject = async () => {
+    const data = new FormData();
+    data.set("image", project.image);
+    data.set("title", project.title);
+    data.set("description", project.description);
+    data.set("githubUrl", project.githubUrl);
+    data.set("previewUrl", project.previewUrl);
+    data.set("tags", project.tags);
     try {
-      const data = new FormData();
-      data.set("image", project.image);
-      data.set("title", project.title);
-      data.set("description", project.description);
-      data.set("githubUrl", project.githubUrl);
-      data.set("previewUrl", project.previewUrl);
-      data.set("tags", project.tags);
-      const res = await axios.post("/api/admin-panel/project/new", data);
-      if (res.status === 200) {
-        toast.success("successfully created new project.");
-        router.push("/admin-panel/projects");
-      } else {
-        toast.error("an error happened while submitting creating new project");
-      }
-      setProject({
-        image: "",
-        title: "",
-        description: "",
-        githubUrl: "",
-        previewUrl: "",
-      });
+      await createProject(data);
+      toast.success("successfully created new project.");
     } catch (error) {
-      throw error;
+      console.log("Error while creating project: ", error);
+      toast.error("Error while creating project.");
     }
+    setLoading(false);
   };
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
+  const handleUpdateProject = async () => {
+    const data = new FormData();
+    data.set("image", editProject.image);
+    data.set("title", editProject.title);
+    data.set("description", editProject.description);
+    data.set("githubUrl", editProject.githubUrl);
+    data.set("previewUrl", editProject.previewUrl);
+    data.set("tags", editProject.tags);
+    data.set("_id", editProject._id);
     try {
-      const data = new FormData();
-      data.set("image", editProject.image);
-      data.set("title", editProject.title);
-      data.set("description", editProject.description);
-      data.set("githubUrl", editProject.githubUrl);
-      data.set("previewUrl", editProject.previewUrl);
-      data.set("tags", editProject.tags);
-      data.set("_id", editProject._id);
-      const res = await axios.put("/api/admin-panel/project/edit", data);
-      if (res.data.status === 200) {
-        toast.success("successfully created new project.");
-        router.push("/admin-panel/projects");
-      } else {
-        toast.error("an error happened while submitting creating new project");
-      }
+      await updateProject(data);
+      toast.success("successfully updated project.");
     } catch (error) {
-      throw error;
+      console.log("Error while updating project: ", error);
+      toast.error("Error while updating project.");
     }
+    setLoading(false);
   };
   return (
     <div>
       <form
-        onSubmit={editProject ? handleEditSubmit : handleCreateSubmit}
+        action={editProject ? handleUpdateProject : handleCreateProject}
+        onSubmit={() => setLoading(true)}
         className="space-y-2 border-2 border-primary rounded-lg p-4"
-        action=""
       >
         <div
           className="h-40 w-40 rounded-xl relative group bg-fixed bg-no-repeat bg-cover"
@@ -138,9 +123,7 @@ const ProjectForm = ({
           title={"Tags"}
           name={"tags"}
         />
-        <button type="submit" className="btn">
-          Save
-        </button>
+        <SaveButton loading={loading} />
       </form>
     </div>
   );

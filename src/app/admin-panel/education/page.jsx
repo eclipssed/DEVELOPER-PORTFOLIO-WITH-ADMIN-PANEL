@@ -1,37 +1,36 @@
 "use client";
 
-import EditEducationInputCard from '../../../components/admin-panel/EditEducationInputCard'
-import axios from "axios";
+import EditEducationInputCard from "../../../components/admin-panel/EditEducationInputCard";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getEducation } from "../../../libs/data";
+import { deleteEducation } from "@/libs/admin-panel/actions";
 
 const educationPage = () => {
   const [education, setEducation] = useState([]);
-  const fetchEducation = async () => {
-    const res = await axios("/api/admin-panel/education");
-    setEducation(res.data.education);
-  };
   useEffect(() => {
-    fetchEducation();
+    getEducation()
+      .then((data) => JSON.parse(data))
+      .then((data) => setEducation(data));
   }, []);
 
   const handleDelete = async (_id) => {
     const confirmed = window.confirm(
-      "Are you sure that you want to Delete the education."
+      "Are you sure that you want to delete the skill."
     );
     if (confirmed) {
       try {
-        // console.log(_id);
-        const res = await axios.patch("/api/admin-panel/education", { _id });
-        if (res.data.status === 200) {
-          toast.success(res.data.message);
-          fetchEducation();
-        } else {
-          toast.error(res.data.message);
+        const res = await deleteEducation(_id);
+        if (res) {
+          toast.success("successfully deleted the education.");
+          getEducation()
+            .then((data) => JSON.parse(data))
+            .then((data) => setEducation(data));
         }
       } catch (error) {
-        toast.error(error);
+        console.log("Error while deleting education: ", error);
+        toast.error("Error while deleting education.");
       }
     } else {
       return;

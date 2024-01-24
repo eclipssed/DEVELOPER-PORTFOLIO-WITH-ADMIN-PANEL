@@ -1,9 +1,9 @@
 "use client";
 
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { createSkill, updateSkill } from "../../libs/admin-panel/actions";
+import SaveButton from "./SaveButton";
 
 const AddSkillInputCard = ({
   edit_id,
@@ -11,10 +11,9 @@ const AddSkillInputCard = ({
   setEditSkill,
   addSkill,
   setAddSkill,
-  handleAddSkill,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     if (edit_id) {
@@ -28,28 +27,37 @@ const AddSkillInputCard = ({
   const handleSetEditSkill = (e) => {
     setEditSkill(e.target.value);
   };
-  const handleEditSkill = async () => {
+  // ADD SKILL
+  const handleCreateSkill = async () => {
     try {
-      const res = await axios.put("/api/admin-panel/skills/edit", {
-        edit_id,
-        editSkill,
-      });
-      if (res.data.status === 200) {
-        toast.success(res.data.message);
-        router.push("/admin-panel/skills");
-      } else {
-        toast.error(res.data.message);
-      }
+      await createSkill(addSkill);
+      toast.success("successfully created new project.");
     } catch (error) {
-      toast.error(error);
+      console.log("Error while creating project: ", error);
+      toast.error("Error while creating project.");
     }
+    setLoading(false);
   };
+  // UPDATE SKILL
+  const handleUpdateSkill = async () => {
+    try {
+      await updateSkill(edit_id, editSkill);
+      toast.success("successfully updated skill.");
+    } catch (error) {
+      console.log("Error while updating skill: ", error);
+      toast.error("Error while updating skill.");
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="flex justify-between items-center border-2 border-primary rounded-lg p-6 ">
-      <div className="">
-        <label htmlFor="" className="font-bold text-xl">
-          Skill
-        </label>
+    <form
+      action={isEdit ? handleUpdateSkill : handleCreateSkill}
+      onSubmit={() => setLoading(true)}
+      className="flex justify-between items-center border-2 border-primary rounded-lg p-6 "
+    >
+      <div>
+        <label className="font-bold text-xl">Skill</label>
         <input
           value={isEdit ? editSkill : addSkill}
           onChange={isEdit ? handleSetEditSkill : handleSetAddSkill}
@@ -58,15 +66,8 @@ const AddSkillInputCard = ({
           placeholder="Javascript"
         />
       </div>
-      <div className="space-x-2">
-        <button
-          onClick={isEdit ? handleEditSkill : handleAddSkill}
-          className="btn"
-        >
-          {isEdit ? "Update" : "Add"}
-        </button>
-      </div>
-    </div>
+      <SaveButton loading={loading} />
+    </form>
   );
 };
 

@@ -3,17 +3,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddEducationInputCard from "../../../../../components/admin-panel/AddEducationInputCard";
+import { getSingleEducation } from "@/libs/data";
 
 const page = ({ params }) => {
   const [education, setEducation] = useState("");
   const _id = params;
 
-  const fetchEducation = async () => {
-    const res = await axios.put("/api/admin-panel/education", { _id });
-    setEducation(res.data.education.education);
-  };
   useEffect(() => {
-    fetchEducation();
+    getSingleEducation(_id)
+      .then((data) => JSON.parse(data))
+      .then((data) => {
+        setEducation(data.education);
+      });
   }, []);
 
   return (

@@ -1,10 +1,10 @@
 import connectMongoDB from "@/db/connectMongoDB";
 import User from "../../../models/user.model";
 import { NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-connectMongoDB();
 
+connectMongoDB();
 export async function POST(req) {
   const { username, email, password } = await req.json();
   try {
@@ -12,7 +12,7 @@ export async function POST(req) {
     const userFound = await User.findOne({ username });
     if (userFound) {
       const validEmail = email === userFound.email;
-      if (userFound) {
+      if (validEmail) {
         const validPassword = await bcrypt.compare(
           password,
           userFound.password
@@ -25,7 +25,7 @@ export async function POST(req) {
             email: userFound.email,
           };
           const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, {
-            expiresIn: "6h",
+            expiresIn: "1h",
           });
           const response = NextResponse.json({
             status: 200,
@@ -33,6 +33,7 @@ export async function POST(req) {
           });
           response.cookies.set("token", token, {
             httpOnly: true,
+            expires: new Date(Date.now() + 60 * 60 * 1000),
           });
           return response;
         } else {
@@ -71,7 +72,7 @@ export async function POST(req) {
 //       password: hashedPassword,
 //     });
 
-//     console.log("saved to db");
+//     // console.log("saved to db");
 
 //     return NextResponse.json({ status: 200, newUser });
 //   } catch (err) {

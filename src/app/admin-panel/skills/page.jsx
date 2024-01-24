@@ -1,19 +1,18 @@
 "use client";
 
 import EditSkillInputCard from "../../../components/admin-panel/EditSkillInputCard";
-import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getSkills } from "../../../libs/data";
+import { deleteSkill } from "@/libs/admin-panel/actions";
 
 const skillsPage = () => {
   const [skills, setSkills] = useState([]);
-  const fetchSkills = async () => {
-    const res = await axios("/api/admin-panel/skills");
-    setSkills(res.data.skills);
-  };
   useEffect(() => {
-    fetchSkills();
+    getSkills()
+      .then((data) => JSON.parse(data))
+      .then((data) => setSkills(data));
   }, []);
 
   const handleDelete = async (_id) => {
@@ -22,16 +21,16 @@ const skillsPage = () => {
     );
     if (confirmed) {
       try {
-        // console.log(_id);
-        const res = await axios.patch("/api/admin-panel/skills", { _id });
-        if (res.data.status === 200) {
-          toast.success(res.data.message);
-          fetchSkills();
-        } else {
-          toast.error(res.data.message);
+        const res = await deleteSkill(_id);
+        if (res) {
+          toast.success("successfully deleted the skill");
+          getSkills()
+            .then((data) => JSON.parse(data))
+            .then((data) => setSkills(data));
         }
       } catch (error) {
-        toast.error(error);
+        console.log("Error while updating skill: ", error);
+        toast.error("Error while deleting skill.");
       }
     } else {
       return;

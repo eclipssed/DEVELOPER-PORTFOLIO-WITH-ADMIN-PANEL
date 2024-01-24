@@ -1,20 +1,8 @@
 import FilterProjects from "../../../components/landing-page/FilterProjects";
-
-const fetchProjects = async () => {
-  try {
-    const res = await fetch(process.env.ROOT_URL + "/api/admin-panel/project", {
-      cache: "no-store",
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-  }
-};
+import { getProjects } from "../../../libs/data";
 
 const ProjectsSection = async () => {
-  const projectsData = await fetchProjects();
-  // console.log(projectsData);
+  const projectsData = await getProjects().then((data) => JSON.parse(data));
 
   return (
     <section

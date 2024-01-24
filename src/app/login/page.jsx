@@ -19,9 +19,10 @@ const page = () => {
   const handleAdminLogin = async (e) => {
     e.preventDefault();
     const res = await axios.post("/api/login", loginData);
+    // console.log(res);
     if (res.data.status === 200) {
       toast.success("login successfull.");
-      router.push("/admin-panel");
+      router.push("/admin-panel/dashboard");
     } else {
       toast.error(res.data.message);
     }

@@ -1,7 +1,7 @@
 "use client";
 
+import { getSingleProject } from "@/libs/data";
 import ProjectForm from "../../../../../components/admin-panel/ProjectForm";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const newPage = ({ params }) => {
@@ -16,15 +16,10 @@ const newPage = ({ params }) => {
     _id: "",
   });
 
-  const fetchProject = async () => {
-    const res = await axios.put("/api/admin-panel/project", { _id });
-    const data = res.data;
-    // console.log(data);
-    setProject((prev) => ({ ...prev, ...data }));
-  };
-
   useEffect(() => {
-    fetchProject();
+    getSingleProject(_id)
+      .then((data) => JSON.parse(data))
+      .then((data) => setProject(data));
   }, []);
 
   // console.log(project);

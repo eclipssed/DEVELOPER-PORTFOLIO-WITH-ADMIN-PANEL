@@ -6,7 +6,7 @@ const ProjectCard = ({ imgUrl, title, description, githubUrl, previewUrl }) => {
   return (
     <div>
       <div
-        className="h-52 md:h-72 rounded-xl relative group bg-fixed"
+        className="h-52 md:h-72 rounded-xl relative group"
         style={{
           background: `url(${imgUrl})`,
           backgroundSize: "cover",
@@ -31,7 +31,7 @@ const ProjectCard = ({ imgUrl, title, description, githubUrl, previewUrl }) => {
       </div>
       <div className=" rounded-xl bg-dark py-6 px-4">
         <h2 className="text-slate-200  text-xl font-semibold mb-2">{title}</h2>
-        <p className="text-slate-400 text-base md:text-lg line-clamp-2 ">
+        <p className="text-slate-400 text-base md:text-lg line-clamp-3 ">
           {description}
         </p>
       </div>

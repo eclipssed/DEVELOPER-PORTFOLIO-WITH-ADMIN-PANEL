@@ -1,9 +1,13 @@
 "use client";
 
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import {
+  createEducation,
+  updateEducation,
+} from "../../libs/admin-panel/actions";
+import SaveButton from "./SaveButton";
 
 const AddEducationInputCard = ({
   edit_id,
@@ -11,9 +15,9 @@ const AddEducationInputCard = ({
   setEditEducation,
   addEducation,
   setAddEducation,
-  handleAddEducation,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (edit_id) {
@@ -27,28 +31,38 @@ const AddEducationInputCard = ({
   const handleSetEditEduction = (e) => {
     setEditEducation(e.target.value);
   };
-  const handleEditEducation = async () => {
+  // ADD EDUCATION
+  const handleCreateEducation = async () => {
     try {
-      const res = await axios.put("/api/admin-panel/education/edit", {
-        edit_id,
-        editEducation,
-      });
-      if (res.data.status === 200) {
-        toast.success(res.data.message);
-        router.push("/admin-panel/education");
-      } else {
-        toast.error(res.data.message);
-      }
+      await createEducation(addEducation);
+      toast.success("successfully created new education.");
     } catch (error) {
-      toast.error(error);
+      console.log("Error while creating education: ", error);
+      toast.error("Error while creating education.");
     }
+    setLoading(false);
   };
+
+  // UPDATE EDUCATION
+  const handleUpdateEducation = async () => {
+    try {
+      await updateEducation(edit_id, editEducation);
+      toast.success("successfully updated education.");
+    } catch (error) {
+      console.log("Error while updating education: ", error);
+      toast.error("Error while updating education.");
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="flex justify-between items-center border-2 border-primary rounded-lg p-6 ">
-      <div className="">
-        <label htmlFor="" className="font-bold text-xl">
-          Education
-        </label>
+    <form
+      action={isEdit ? handleUpdateEducation : handleCreateEducation}
+      onSubmit={() => setLoading(true)}
+      className="flex justify-between items-center border-2 border-primary rounded-lg p-6 "
+    >
+      <div>
+        <label className="font-bold text-xl">Education</label>
         <input
           value={isEdit ? editEducation : addEducation}
           onChange={isEdit ? handleSetEditEduction : handleSetAddSkill}
@@ -57,15 +71,8 @@ const AddEducationInputCard = ({
           placeholder="Bachelor of Science in Computer Science, XYZ University, 20XX"
         />
       </div>
-      <div className="space-x-2">
-        <button
-          onClick={isEdit ? handleEditEducation : handleAddEducation}
-          className="btn"
-        >
-          {isEdit ? "Update" : "Add"}
-        </button>
-      </div>
-    </div>
+      <SaveButton loading={loading} />
+    </form>
   );
 };
 

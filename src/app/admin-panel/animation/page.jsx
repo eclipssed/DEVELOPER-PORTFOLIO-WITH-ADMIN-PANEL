@@ -3,9 +3,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getAnimation } from "../../../libs/data";
+import { updateAnimation } from "@/libs/admin-panel/actions";
+import SaveButton from "@/components/admin-panel/SaveButton";
 
 const animationPage = () => {
   const maxWords = 5;
+  const [loading, setLoading] = useState(false);
   const [remainingWords, setRemainingWords] = useState(maxWords);
   const [animation, setAnimation] = useState({
     animeOne: "",
@@ -14,19 +18,10 @@ const animationPage = () => {
     animeFour: "",
   });
 
-  const fetchAnimationText = async () => {
-    try {
-      const res = await axios("/api/admin-panel/animation");
-      const data = res.data?.[0];
-      // console.log(data);
-      setAnimation(data);
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    }
-  };
-
   useEffect(() => {
-    fetchAnimationText();
+    getAnimation()
+      .then((data) => JSON.parse(data))
+      .then((data) => setAnimation(data));
   }, []);
 
   const handleAnimationTextChange = (e) => {
@@ -39,35 +34,28 @@ const animationPage = () => {
     }
   };
 
-  const handleAnimationTextUpload = async () => {
+  const handleAnimationUpdate = async () => {
     try {
-      if (
-        !animation.animeOne ||
-        !animation.animeTwo ||
-        !animation.animeThree ||
-        !animation.animeFour
-      ) {
-        toast.error("All fields are required.");
-        return;
+      const res = await updateAnimation(animation);
+      if (res) {
+        toast.success("Successfully updated animation.");
+        getAnimation()
+          .then((data) => JSON.parse(data))
+          .then((data) => setAnimation(data));
       }
-      const textPromise = new Promise(async (resolve, reject) => {
-        const res = await axios.put("/api/admin-panel/animation", animation);
-        if (res.data.status === 200) {
-          fetchAnimationText();
-          resolve();
-        } else reject();
-      });
-      await toast.promise(textPromise, {
-        loading: "Updating animation...",
-        success: "Successfully updated the animation.",
-        error: "Couldn't update the animation.",
-      });
     } catch (error) {
-      throw error;
+      console.log("Error while updating animation: ", error);
+      toast.error("Error while updating animation.");
     }
+    setLoading(false);
   };
+
   return (
-    <div className="flex flex-col gap-4 rounded-lg wrapper">
+    <form
+      action={handleAnimationUpdate}
+      onSubmit={() => setLoading(true)}
+      className="flex flex-col gap-4 rounded-lg wrapper"
+    >
       <div className="border-2 border-secondary rounded-lg p-4">
         <label className="animation-2xl font-bold animation-black">
           First Animation Text
@@ -124,12 +112,8 @@ const animationPage = () => {
         ></input>
         <p className="font font-semibold">Words Left: {remainingWords}</p>
       </div>
-      <div>
-        <button onClick={handleAnimationTextUpload} className="btn">
-          Save
-        </button>
-      </div>
-    </div>
+      <SaveButton loading={loading} />
+    </form>
   );
 };
 

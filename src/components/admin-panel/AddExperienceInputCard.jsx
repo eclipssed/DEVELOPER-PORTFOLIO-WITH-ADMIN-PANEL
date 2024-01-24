@@ -1,9 +1,12 @@
 "use client";
 
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import {
+  createExperience,
+  updateExperience,
+} from "../../libs/admin-panel/actions";
+import SaveButton from "../../components/admin-panel/SaveButton";
 
 const AddExperienceInputCard = ({
   edit_id,
@@ -11,8 +14,8 @@ const AddExperienceInputCard = ({
   setEditExperience,
   addExperience,
   setAddExperience,
-  handleAddExperience,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -20,31 +23,41 @@ const AddExperienceInputCard = ({
       setIsEdit(true);
     }
   }, []);
-  const router = useRouter();
   const handleSetAddSkill = (e) => {
     setAddExperience(e.target.value);
   };
   const handleSetEditExperience = (e) => {
     setEditExperience(e.target.value);
   };
-  const handleEditExperience = async () => {
+  // ADD EXPERIENCE
+  const handleCreateExperience = async () => {
     try {
-      const res = await axios.put("/api/admin-panel/experience/edit", {
-        edit_id,
-        editExperience,
-      });
-      if (res.data.status === 200) {
-        toast.success(res.data.message);
-        router.push("/admin-panel/experience");
-      } else {
-        toast.error(res.data.message);
-      }
+      await createExperience(addExperience);
+      toast.success("successfully created new experience.");
     } catch (error) {
-      toast.error(error);
+      console.log("Error while creating experience: ", error);
+      toast.error("Error while creating experience.");
     }
+    setLoading(false);
+  };
+
+  // UPDATE EXPERIENCE
+  const handleUpdateExperience = async () => {
+    try {
+      await updateExperience(edit_id, editExperience);
+      toast.success("successfully updated experience.");
+    } catch (error) {
+      console.log("Error while updating experience: ", error);
+      toast.error("Error while updating experience.");
+    }
+    setLoading(false);
   };
   return (
-    <div className="flex justify-between items-center border-2 border-primary rounded-lg p-6 ">
+    <form
+      action={isEdit ? handleUpdateExperience : handleCreateExperience}
+      onSubmit={() => setLoading(true)}
+      className="flex justify-between items-center border-2 border-primary rounded-lg p-6 "
+    >
       <div className="">
         <label htmlFor="" className="font-bold text-xl">
           Experience
@@ -57,15 +70,8 @@ const AddExperienceInputCard = ({
           placeholder="Frontend Developer, ABC Corporation, 20XX - 20XX"
         />
       </div>
-      <div className="space-x-2">
-        <button
-          onClick={isEdit ? handleEditExperience : handleAddExperience}
-          className="btn"
-        >
-          {isEdit ? "Update" : "Add"}
-        </button>
-      </div>
-    </div>
+      <SaveButton loading={loading} />
+    </form>
   );
 };
 

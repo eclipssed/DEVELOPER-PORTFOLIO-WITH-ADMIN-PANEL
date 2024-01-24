@@ -1,20 +1,20 @@
 "use client";
 
+import { getProjects } from "@/libs/data";
 import ProjectCard from "../../../components/admin-panel/ProjectCard";
 import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { deleteProject } from "@/libs/admin-panel/actions";
 
 const projectsPage = () => {
   const [projects, setProjects] = useState([]);
-  const fetchProjects = async () => {
-    const res = await axios("/api/admin-panel/project");
-    const data = res.data;
-    setProjects(data);
-  };
+
   useEffect(() => {
-    fetchProjects();
+    getProjects()
+      .then((data) => JSON.parse(data))
+      .then((data) => setProjects(data));
   }, []);
 
   const handleDelete = async (_id) => {
@@ -24,16 +24,16 @@ const projectsPage = () => {
     // console.log(confirmed);
     if (confirmed) {
       try {
-        const res = await axios.patch("/api/admin-panel/project", { _id });
-        if (res.data.status === 200) {
+        const res = await deleteProject(_id);
+        if (res) {
           toast.success("successfully deleted the project");
-        } else {
-          toast.error("couldn't delete the project.");
+          getProjects()
+            .then((data) => JSON.parse(data))
+            .then((data) => setProjects(data));
         }
-        fetchProjects();
       } catch (error) {
-        toast.error("couldn't delete the project.");
-        throw error;
+        console.log("Error while updating textFields: ", error);
+        toast.error("Error while deleting project.");
       }
     } else {
       return;
