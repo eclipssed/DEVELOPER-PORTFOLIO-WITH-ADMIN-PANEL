@@ -2,7 +2,8 @@ import SideNav from "@/components/admin-panel/SideNav";
 import Navbar from "@/components/admin-panel/Navbar";
 import "./globals.css";
 
-const layout = ({ children }) => {
+const layout = async ({ children }) => {
+  
   return (
     <div className="flex min-h-screen gap-4 ">
       <SideNav />

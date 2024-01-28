@@ -46,7 +46,7 @@ const Navbar = ({ logo }) => {
 
   return (
     <nav
-      className={`z-10 relative ease-out  ${
+      className={`z-10 relative ease-out duration-100  ${
         isSticky
           ? " ease-in sticky top-0 left-0 right-0 border-b border-b-light bg-[#121212] bg-opacity-80"
           : ""

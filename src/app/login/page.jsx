@@ -11,6 +11,7 @@ const page = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleChange = (e) => {
     setLoginData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -18,6 +19,7 @@ const page = () => {
 
   const handleAdminLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await axios.post("/api/login", loginData);
     // console.log(res);
     if (res.data.status === 200) {
@@ -26,6 +28,7 @@ const page = () => {
     } else {
       toast.error(res.data.message);
     }
+    setLoading(false);
   };
   return (
     <section className="max-w-lg mx-auto flex justify-center items-center min-h-screen">
@@ -60,7 +63,7 @@ const page = () => {
             type="submit"
             className="btn rounded-lg py-2 font-bold !bg-primary"
           >
-            Login
+            {loading ? "logging in..." : "login"}
           </button>
         </form>
       </div>

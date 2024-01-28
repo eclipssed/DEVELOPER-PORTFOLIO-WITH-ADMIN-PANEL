@@ -11,6 +11,9 @@ import Projects from "../models/project.model";
 import Skills from "../models/skills.model";
 import Text from "@/models/text.model";
 import { unstable_noStore as noStore } from "next/cache";
+import Visits from "@/models/visits.model";
+import CountryVisits from "@/models/countryVisits.model";
+import ViewersDetails from "@/models/viewersDetails.model";
 
 connectMongoDB();
 
@@ -183,6 +186,49 @@ export const getText = async () => {
     return jsonObject;
   } catch (error) {
     console.log("An error occured while fetching text: ", error);
+    throw error;
+  }
+};
+export const getVisits = async () => {
+  // noStore();
+  try {
+    const data = await Visits.find();
+    const textData = data[0];
+    // console.log(textData);
+    const jsonObject = JSON.stringify(textData);
+
+    return jsonObject;
+  } catch (error) {
+    console.log("An error occured while fetching Visits: ", error);
+    throw error;
+  }
+};
+export const getCountryVisits = async () => {
+  // noStore();
+  try {
+    const data = await CountryVisits.find();
+    // console.log(textData);
+    const jsonObject = JSON.stringify(data);
+
+    return jsonObject;
+  } catch (error) {
+    console.log("An error occured while fetching country visits: ", error);
+    throw error;
+  }
+};
+export const getViewersDetails = async () => {
+  // noStore();
+  try {
+    const data = await ViewersDetails.find();
+    // console.log(textData);
+    const jsonObject = JSON.stringify(data);
+
+    return jsonObject;
+  } catch (error) {
+    console.log(
+      "An error occured while fetching country viewers details: ",
+      error
+    );
     throw error;
   }
 };
