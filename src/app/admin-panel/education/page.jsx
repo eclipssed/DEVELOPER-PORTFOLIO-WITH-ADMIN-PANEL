@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { getEducation } from "../../../libs/data";
 import { deleteEducation } from "@/libs/admin-panel/actions";
 
-const page = () => {
+const EducationPage = () => {
   const [education, setEducation] = useState([]);
   useEffect(() => {
     getEducation()
@@ -45,12 +45,16 @@ const page = () => {
         </Link>
       </div>
       <div>
-        {education?.map((edu) => (
-          <EditEducationInputCard {...edu} handleDelete={handleDelete} />
+        {education?.map((edu, index) => (
+          <EditEducationInputCard
+            key={index}
+            {...edu}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
     </section>
   );
 };
 
-export default page;
+export default EducationPage;

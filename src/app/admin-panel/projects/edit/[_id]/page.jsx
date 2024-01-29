@@ -4,7 +4,7 @@ import { getSingleProject } from "@/libs/data";
 import ProjectForm from "../../../../../components/admin-panel/ProjectForm";
 import React, { useEffect, useState } from "react";
 
-const page = ({ params }) => {
+const EditProjectsPage = ({ params }) => {
   const { _id } = params;
   const [project, setProject] = useState({
     description: "",
@@ -20,7 +20,7 @@ const page = ({ params }) => {
     getSingleProject(_id)
       .then((data) => JSON.parse(data))
       .then((data) => setProject(data));
-  }, []);
+  }, [_id]);
 
   // console.log(project);
 
@@ -50,4 +50,4 @@ const page = ({ params }) => {
   );
 };
 
-export default page;
+export default EditProjectsPage;

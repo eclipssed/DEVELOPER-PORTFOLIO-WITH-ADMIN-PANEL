@@ -120,7 +120,7 @@ const AboutSection = ({
               onClick={() => handleActive("skills")}
               className={`text-light hover:text-white font-semibold cursor-pointer ${
                 isActive === "skills"
-                  ? "text-white border-b-2 border-b-secondary"
+                  ? "text-white border-b-2 border-b-primary"
                   : ""
               } `}
             >
@@ -130,7 +130,7 @@ const AboutSection = ({
               onClick={() => handleActive("education")}
               className={`text-light hover:text-white font-semibold cursor-pointer ${
                 isActive === "education"
-                  ? "text-white  border-b-2 border-b-secondary"
+                  ? "text-white  border-b-2 border-b-primary"
                   : ""
               } `}
             >
@@ -140,7 +140,7 @@ const AboutSection = ({
               onClick={() => handleActive("experience")}
               className={`text-light hover:text-white font-semibold cursor-pointer ${
                 isActive === "experience"
-                  ? " text-white  border-b-2 border-b-secondary"
+                  ? " text-white  border-b-2 border-b-primary"
                   : ""
               } `}
             >

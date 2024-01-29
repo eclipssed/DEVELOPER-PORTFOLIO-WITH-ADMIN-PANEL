@@ -7,7 +7,7 @@ import CVCard from "../../../components/admin-panel/CVCard";
 import { getImages } from "../../../libs/data";
 import { updateImages } from "@/libs/admin-panel/actions";
 
-const image = () => {
+const ImagesPage = () => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState({
     logo: "",
@@ -27,26 +27,6 @@ const image = () => {
     setImages((prev) => ({ ...prev, [e.target.name]: file }));
   };
   const handleUpdateImages = async () => {
-    // try {
-    //   const res = await updateColors(colors);
-    // if (res) {
-    //   toast.success("Successfully updated colors.");
-    //   setColors({
-    //     primary: "",
-    //     secondary: "",
-    //     dark: "",
-    //     light: "",
-    //   });
-    //   getColors()
-    //     .then((data) => JSON.parse(data))
-    //     .then((data) => setColors(data));
-    // }
-    // } catch (error) {
-    //   console.log("Error while updating colors: ", error);
-    //   toast.error("Error while updating colors");
-    // }
-    // setLoading(false);
-    // e.preventDefault();
     const data = new FormData();
     data.set("logo", images.logo);
     data.set("hero", images.hero);
@@ -67,18 +47,6 @@ const image = () => {
           .then((data) => setImages(data));
       }
       setLoading(false);
-      //   const imagePromise = new Promise(async (resolve, reject) => {
-      //     const res = await axios.put("/api/admin-panel/images", data);
-      //     if (res.status === 200) {
-      //       fetchImages();
-      //       resolve();
-      //     } else reject();
-      //   });
-      //   await toast.promise(imagePromise, {
-      //     loading: "updating...",
-      //     success: "successfully updated the image",
-      //     error: "couldn't update the image.",
-      //   });
     } catch (error) {
       throw error;
     }
@@ -130,4 +98,4 @@ const image = () => {
   );
 };
 
-export default image;
+export default ImagesPage;

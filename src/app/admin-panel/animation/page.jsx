@@ -7,7 +7,7 @@ import { getAnimation } from "../../../libs/data";
 import { updateAnimation } from "@/libs/admin-panel/actions";
 import SaveButton from "@/components/admin-panel/SaveButton";
 
-const page = () => {
+const AnimationPage = () => {
   const maxWords = 5;
   const [loading, setLoading] = useState(false);
   const [remainingWords, setRemainingWords] = useState(maxWords);
@@ -117,4 +117,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AnimationPage;

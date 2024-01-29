@@ -28,7 +28,7 @@ const CSSVariableProvider = ({ children }) => {
       .then((data) => setColors(data))
       .then(() => updateCSSVariables())
       .catch((err) => console.log(err));
-  }, []);
+  }, [updateCSSVariables]);
 
   // console.log(colors);
   if (loading) {

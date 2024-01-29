@@ -4,7 +4,7 @@ import { getSingleSkill } from "@/libs/data";
 import AddSkillInputCard from "../../../../../components/admin-panel/AddSkillInputCard";
 import React, { useEffect, useState } from "react";
 
-const page = ({ params }) => {
+const EditSkillsPage = ({ params }) => {
   const [skill, setSkill] = useState();
   const _id = params;
 
@@ -14,7 +14,7 @@ const page = ({ params }) => {
       .then((data) => {
         setSkill(data.skill);
       });
-  }, []);
+  }, [_id]);
 
   return (
     <section className="wrapper">
@@ -27,4 +27,4 @@ const page = ({ params }) => {
   );
 };
 
-export default page;
+export default EditSkillsPage;

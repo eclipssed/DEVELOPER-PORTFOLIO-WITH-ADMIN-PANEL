@@ -3,7 +3,7 @@
 import AddEducationInputCard from "@/components/admin-panel/AddEducationInputCard";
 import React, { useState } from "react";
 
-const page = () => {
+const NewEducationPage = () => {
   const [education, setEducation] = useState("");
 
   return (
@@ -16,4 +16,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default NewEducationPage;

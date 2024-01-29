@@ -8,7 +8,7 @@ const ProjectSelectButton = ({ label, isSelected, handleSelect, tagName }) => {
         onClick={() => handleSelect(tagName)}
         className={`px-8 py-3 rounded-full border-2 ${
           isSelected === tagName
-            ? " border-secondary text-white"
+            ? " border-primary text-white"
             : "border-slate-500 text-light  hover:border-white hover:text-white"
         }   font-semibold text-xl cursor-pointer `}
       >

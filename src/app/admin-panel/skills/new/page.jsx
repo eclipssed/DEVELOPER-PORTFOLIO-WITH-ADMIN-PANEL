@@ -3,7 +3,7 @@
 import AddSkillInputCard from "../../../../components/admin-panel/AddSkillInputCard";
 import React, { useState } from "react";
 
-const page = () => {
+const NewSkillsPage = () => {
   const [skill, setSkill] = useState("");
 
   return (
@@ -13,4 +13,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default NewSkillsPage;

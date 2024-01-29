@@ -22,7 +22,7 @@ const AddExperienceInputCard = ({
     if (edit_id) {
       setIsEdit(true);
     }
-  }, []);
+  }, [edit_id]);
   const handleSetAddSkill = (e) => {
     setAddExperience(e.target.value);
   };

@@ -19,7 +19,7 @@ const AddSkillInputCard = ({
     if (edit_id) {
       setIsEdit(true);
     }
-  }, []);
+  }, [edit_id]);
 
   const handleSetAddSkill = (e) => {
     setAddSkill(e.target.value);

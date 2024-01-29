@@ -5,7 +5,7 @@ import AddExperienceInputCard from "@/components/admin-panel/AddExperienceInputC
 import { getSingleExperience } from "../../../../../libs/data";
 import React, { useEffect, useState } from "react";
 
-const page = ({ params }) => {
+const EditExperiencePage = ({ params }) => {
   const [experience, setExperience] = useState("");
   const _id = params;
 
@@ -15,7 +15,7 @@ const page = ({ params }) => {
       .then((data) => {
         setExperience(data.experience);
       });
-  }, []);
+  }, [_id]);
 
   return (
     <section className="wrapper">
@@ -28,4 +28,4 @@ const page = ({ params }) => {
   );
 };
 
-export default page;
+export default EditExperiencePage;

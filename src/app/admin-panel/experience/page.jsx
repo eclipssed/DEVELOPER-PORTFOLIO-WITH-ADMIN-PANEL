@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { deleteExperience } from "@/libs/admin-panel/actions";
 
-const page = () => {
+const ExperiencePage = () => {
   const [experience, setExperience] = useState([]);
 
   useEffect(() => {
@@ -46,12 +46,16 @@ const page = () => {
         </Link>
       </div>
       <div>
-        {experience?.map((exp) => (
-          <EditExperienceInputCard {...exp} handleDelete={handleDelete} />
+        {experience?.map((exp, index) => (
+          <EditExperienceInputCard
+            key={index}
+            {...exp}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
     </section>
   );
 };
 
-export default page;
+export default ExperiencePage;

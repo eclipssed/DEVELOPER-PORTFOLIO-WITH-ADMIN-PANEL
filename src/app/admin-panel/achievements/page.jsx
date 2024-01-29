@@ -1,9 +1,9 @@
 import React from 'react'
 
-const page = () => {
+const AchievementsPage = () => {
   return (
-    <div>page</div>
+    <div>AchievementsPage</div>
   )
 }
 
-export default page
+export default AchievementsPage

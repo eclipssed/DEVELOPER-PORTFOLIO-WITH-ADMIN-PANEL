@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { getSkills } from "../../../libs/data";
 import { deleteSkill } from "@/libs/admin-panel/actions";
 
-const page = () => {
+const SkillsPage = () => {
   const [skills, setSkills] = useState([]);
   useEffect(() => {
     getSkills()
@@ -45,12 +45,16 @@ const page = () => {
         </Link>
       </div>
       <div>
-        {skills?.map((skill) => (
-          <EditSkillInputCard {...skill} handleDelete={handleDelete} />
+        {skills?.map((skill, index) => (
+          <EditSkillInputCard
+            key={index}
+            {...skill}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
     </section>
   );
 };
 
-export default page;
+export default SkillsPage;

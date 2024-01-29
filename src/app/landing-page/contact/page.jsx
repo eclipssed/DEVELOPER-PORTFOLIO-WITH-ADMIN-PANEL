@@ -10,7 +10,7 @@ import { MotionDiv } from "../../../components/MotionDiv";
 import toast from "react-hot-toast";
 import { getLinks, getText } from "@/libs/data";
 
-const EmailSection = () => {
+const ContactPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
@@ -86,12 +86,12 @@ const EmailSection = () => {
         <p className="text-light mb-4 max-w-md">{contactText}</p>
         <div className="socials flex gap-2">
           <Link href={socialLinks?.github}>
-            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-secondary hover:text-white duration-200 ease-linear">
+            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-primary hover:text-white duration-200 ease-linear">
               <FaGithub className="h-6 w-6 z-10 group-hover:text-white absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" />
             </div>
           </Link>
           <Link href={socialLinks?.linkedin}>
-            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-secondary duration-200 ease-linear hover:text-white-white">
+            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-primary duration-200 ease-linear hover:text-white-white">
               <FaLinkedin className="h-6 w-6 z-10 group-hover:text-white absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" />
             </div>
           </Link>
@@ -173,4 +173,4 @@ const EmailSection = () => {
   );
 };
 
-export default EmailSection;
+export default ContactPage;

@@ -32,7 +32,7 @@ const FilterProjects = ({ projectsData }) => {
     setFilteredProject(
       projectsData.filter((project) => project.tags.includes(isSelected))
     );
-  }, [isSelected]);
+  }, [isSelected, projectsData]);
   const handleSelect = (tagName) => {
     setIsSelected(tagName);
   };

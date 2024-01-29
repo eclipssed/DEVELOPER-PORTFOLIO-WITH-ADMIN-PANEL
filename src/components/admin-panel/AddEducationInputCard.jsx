@@ -23,7 +23,7 @@ const AddEducationInputCard = ({
     if (edit_id) {
       setIsEdit(true);
     }
-  }, []);
+  }, [edit_id]);
   const router = useRouter();
   const handleSetAddSkill = (e) => {
     setAddEducation(e.target.value);

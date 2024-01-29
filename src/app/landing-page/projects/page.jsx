@@ -1,7 +1,7 @@
 import FilterProjects from "../../../components/landing-page/FilterProjects";
 import { getProjects } from "../../../libs/data";
 
-const ProjectsSection = async () => {
+const ProjectsPage = async () => {
   const projectsData = await getProjects().then((data) => JSON.parse(data));
 
   return (
@@ -15,4 +15,4 @@ const ProjectsSection = async () => {
   );
 };
 
-export default ProjectsSection;
+export default ProjectsPage;

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { getColors } from "../../../libs/data";
 import SaveButton from "@/components/admin-panel/SaveButton";
 
-const page = () => {
+const ColorsPage = () => {
   const [loading, setLoading] = useState(false);
   const [colors, setColors] = useState({
     primary: "#fff",
@@ -88,4 +88,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ColorsPage;

@@ -55,7 +55,7 @@ const EmailSection = ({ contactText, socialLinks }) => {
       id="contact"
       className="grid md:grid-cols-2 my-12  py-24 gap-4 relative"
     >
-      <div className="bg-gradient-radial from-secondary to-transparent rounded-full h-60 w-60 z-0 blur-lg absolute top-full -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="bg-gradient-radial from-primary to-transparent rounded-full h-60 w-60 z-0 blur-lg absolute top-full -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
       <MotionDiv
         ref={textRef}
         variants={textVariants}
@@ -71,12 +71,12 @@ const EmailSection = ({ contactText, socialLinks }) => {
         <p className="text-light mb-4 max-w-md">{contactText}</p>
         <div className="socials flex gap-2">
           <Link href={socialLinks?.github}>
-            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-secondary hover:text-white duration-200 ease-linear">
+            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-primary hover:text-white duration-200 ease-linear">
               <FaGithub className="h-6 w-6 z-10 group-hover:text-white absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" />
             </div>
           </Link>
           <Link href={socialLinks?.linkedin}>
-            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-secondary duration-200 ease-linear hover:text-white-white">
+            <div className="group h-10 w-10 bg-white text-black relative rounded-full hover:bg-primary duration-200 ease-linear hover:text-white-white">
               <FaLinkedin className="h-6 w-6 z-10 group-hover:text-white absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" />
             </div>
           </Link>
