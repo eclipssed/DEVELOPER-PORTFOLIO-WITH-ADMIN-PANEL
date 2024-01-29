@@ -5,10 +5,11 @@ import Link from "next/link";
 import NavLink from "./NavLink";
 import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
+import { getText } from "@/libs/data";
 
 const navLinks = [
   {
-    href: "#about",
+    href: "/landing-page/about",
     title: "About",
   },
   {
@@ -16,20 +17,23 @@ const navLinks = [
     title: "Projects",
   },
   {
-    href: "#contact",
+    href: "/landing-page/contact",
     title: "Contact",
   },
 ];
 
-const Navbar = ({ logo }) => {
+const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [logo, setLogo] = useState("");
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {
+    getText()
+      .then((data) => JSON.parse(data))
+      .then((data) => setLogo(data.logo));
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsSticky(true);

@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { MotionDiv } from "../MotionDiv";
+import { MotionDiv } from "../../../components/MotionDiv";
 import { useInView } from "framer-motion";
+import {
+  getEducation,
+  getExperience,
+  getImages,
+  getSkills,
+  getText,
+} from "@/libs/data";
 
 // tabData
 const tabData = [
@@ -21,19 +28,36 @@ const tabData = [
   },
 ];
 
-const AboutSection = ({
-  aboutImage,
-  aboutText,
-  skills,
-  education,
-  experience,
-}) => {
+const AboutSection = () => {
   const [isActive, setIsActive] = useState("skills");
+  const [skills, setSkills] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [experience, setExperience] = useState([]);
+  const [aboutImage, setAboutImage] = useState("");
+  const [aboutText, setAboutText] = useState("");
 
   const imageRef = useRef(null);
   const textRef = useRef(null);
   const imageInView = useInView(imageRef, { once: true });
   const textInView = useInView(textRef, { once: true });
+
+  useEffect(() => {
+    getSkills()
+      .then((data) => JSON.parse(data))
+      .then((data) => setSkills(data));
+    getEducation()
+      .then((data) => JSON.parse(data))
+      .then((data) => setEducation(data));
+    getExperience()
+      .then((data) => JSON.parse(data))
+      .then((data) => setExperience(data));
+    getImages()
+      .then((data) => JSON.parse(data))
+      .then((data) => setAboutImage(data.about));
+    getText()
+      .then((data) => JSON.parse(data))
+      .then((data) => setAboutText(data.about));
+  });
 
   const handleActive = (tabName) => {
     setIsActive(tabName);

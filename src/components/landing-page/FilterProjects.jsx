@@ -11,6 +11,10 @@ const projectSelectOptions = [
     tagName: "all",
   },
   {
+    label: "Vanilla",
+    tagName: "vanilla",
+  },
+  {
     label: "React Js",
     tagName: "react.js",
   },
@@ -42,6 +46,7 @@ const FilterProjects = ({ projectsData }) => {
       <div className="flex justify-center flex-wrap items-center text-white py-6 gap-2">
         {projectSelectOptions.map((option) => (
           <ProjectSelectButton
+            key={option.tagName}
             label={option.label}
             tagName={option.tagName}
             handleSelect={handleSelect}

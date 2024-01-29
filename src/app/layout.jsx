@@ -20,6 +20,7 @@ export const metadata = {
     "My name is Furqan and I am a full stack developer. I have working experience in react js, node.js and next.js",
   icons: {
     icon: "/icon.png",
+    // icon: {logo} // it doesn't work coz it rquires the name of the image to be icon.png
   },
 };
 
@@ -30,8 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      // className="scrollbar scrollbar-thumb-secondary scrollbar-thumb-rounded-full"
-      className="scroll-smooth scrollbar scrollbar-thumb-secondary scrollbar-track-dark scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
+      className="scroll-smooth scrollbar-thin scrollbar-thumb-secondary scrollbar-track-dark scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
     >
       <body className={inter.className}>
         <Toaster position="top-center" reverseOrder={false} />

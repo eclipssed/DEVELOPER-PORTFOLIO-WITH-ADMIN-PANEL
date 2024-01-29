@@ -34,7 +34,7 @@ export const getAnimation = async () => {
 export const getColors = async () => {
   // noStore();
   try {
-    const data = await Colors.find().select("-_id");
+    const data = await Colors.find().select("-_id ");
     const colors = data[0];
     // console.log(colors);
     const jsonObject = JSON.stringify(colors);

@@ -36,11 +36,10 @@ export default async function Home() {
     getText().then((data) => JSON.parse(data)),
     getAnimation().then((data) => JSON.parse(data)),
   ]);
-  // console.log(textData.logo);
 
   return (
     <main className="flex min-h-screen flex-col justify-between bg-dark ">
-      <Navbar logo={textData.logo} />
+      <Navbar />
       <div className="container mx-auto px-4 lg:px-16 py-2">
         <HeroSection
           animation={animation}
