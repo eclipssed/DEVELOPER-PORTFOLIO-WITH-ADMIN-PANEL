@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className="scroll-smooth scrollbar-thin scrollbar-thumb-primary scrollbar-track-dark scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
+      className="scroll-smooth scrollbar-thin scrollbar-thumb-secondary scrollbar-track-dark scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
     >
       <body className={inter.className}>
         <Toaster position="top-center" reverseOrder={false} />

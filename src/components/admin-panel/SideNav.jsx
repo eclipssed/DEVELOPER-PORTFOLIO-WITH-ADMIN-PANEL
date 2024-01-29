@@ -90,21 +90,24 @@ const SideNav = () => {
         {adminOptions.map((option, index) => {
           const isActive = pathName.includes(option.link);
           return (
-            <div key={index}>
-              <div
-                className={`text-xl w-full text-start font-semibold py-2 px-4  text-white rounded-lg flex justify-center items-center gap-4 ${
-                  isActive ? "bg-slate-900" : "bg-slate-700 "
-                }`}
+            <div
+              key={index}
+              // className="flex justify-start items-center"
+            >
+              <Link
+                key={index}
+                href={option.link}
+                className="w-full text-start"
               >
-                <span className="h-4 w-4">{option.icon}</span>
-                <Link
-                  key={index}
-                  href={option.link}
-                  className="w-full text-start"
+                <div
+                  className={`text-xl w-full text-start font-semibold py-2 px-4  text-white rounded-lg flex justify-start items-center gap-4 ${
+                    isActive ? "bg-slate-900" : "bg-slate-700 "
+                  }`}
                 >
+                  <span className="h-4 w-4">{option.icon}</span>
                   {option.title}
-                </Link>
-              </div>
+                </div>
+              </Link>
             </div>
           );
         })}

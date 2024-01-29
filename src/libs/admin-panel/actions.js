@@ -109,6 +109,7 @@ export async function createProject(formData) {
   const githubUrl = formData.get("githubUrl");
   const previewUrl = formData.get("previewUrl");
   const tags = formData.get("tags");
+  const tagsArray = tags.split(",");
   try {
     const imagePath = await saveImage(image);
     const projedtObject = {
@@ -117,7 +118,7 @@ export async function createProject(formData) {
       description: description,
       githubUrl: githubUrl,
       previewUrl: previewUrl,
-      tags: tags,
+      tags: tagsArray,
     };
     await Projects.create(projedtObject);
   } catch (error) {
@@ -133,19 +134,20 @@ export async function updateProject(formData) {
   const description = formData.get("description");
   const githubUrl = formData.get("githubUrl");
   const previewUrl = formData.get("previewUrl");
-  const tags = formData.get("tags");
   const _id = formData.get("_id");
+  const tags = formData.get("tags");
+  const tagsArray = tags.split(",");
   try {
     const imagePath = await saveImage(image);
-    const projedtObject = {
+    const projectObject = {
       image: imagePath,
       title: title,
       description: description,
       githubUrl: githubUrl,
       previewUrl: previewUrl,
-      tags: tags,
+      tags: tagsArray,
     };
-    await Projects.findByIdAndUpdate({ _id }, projedtObject);
+    await Projects.findByIdAndUpdate({ _id }, projectObject);
   } catch (error) {
     console.error("Error creating project:", error);
     throw error;

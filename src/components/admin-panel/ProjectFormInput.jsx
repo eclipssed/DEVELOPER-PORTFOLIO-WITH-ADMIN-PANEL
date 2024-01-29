@@ -12,7 +12,7 @@ const ProjectFormInput = ({ onChange, value, title, name }) => {
         type="text"
         placeholder={
           title === "Tags"
-            ? "Enter tags separated by a comma ( react js, node.js etc...)"
+            ? "Enter tags separated by a comma ( all, vanilla, react.js, next.js etc...)"
             : `Enter your project ${title} here...`
         }
       />
