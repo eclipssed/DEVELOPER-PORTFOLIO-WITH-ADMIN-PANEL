@@ -7,7 +7,7 @@ import { getText } from "../../../libs/data";
 import { updateText } from "@/libs/admin-panel/actions";
 import SaveButton from "@/components/admin-panel/SaveButton";
 
-const textPage = () => {
+const page = () => {
   const maxWords = 100;
   const [remainingWords, setRemainingWords] = useState({
     hero: maxWords,
@@ -121,4 +121,4 @@ const textPage = () => {
   );
 };
 
-export default textPage;
+export default page;

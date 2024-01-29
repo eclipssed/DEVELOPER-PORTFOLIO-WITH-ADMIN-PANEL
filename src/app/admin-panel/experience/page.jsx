@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { deleteExperience } from "@/libs/admin-panel/actions";
 
-const experiencePage = () => {
+const page = () => {
   const [experience, setExperience] = useState([]);
 
   useEffect(() => {
@@ -54,4 +54,4 @@ const experiencePage = () => {
   );
 };
 
-export default experiencePage;
+export default page;

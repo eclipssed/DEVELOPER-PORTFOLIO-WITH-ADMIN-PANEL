@@ -143,7 +143,7 @@ export async function generateCountryVisits() {
         country: data.countryCode,
         count: 1,
       };
-      console.log(websiteCountryVisitsObject);
+      // console.log(websiteCountryVisitsObject);
       await CountryVisits.create(websiteCountryVisitsObject);
     }
   } catch (error) {

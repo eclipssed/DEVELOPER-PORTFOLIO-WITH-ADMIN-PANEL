@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { getEducation } from "../../../libs/data";
 import { deleteEducation } from "@/libs/admin-panel/actions";
 
-const educationPage = () => {
+const page = () => {
   const [education, setEducation] = useState([]);
   useEffect(() => {
     getEducation()
@@ -53,4 +53,4 @@ const educationPage = () => {
   );
 };
 
-export default educationPage;
+export default page;

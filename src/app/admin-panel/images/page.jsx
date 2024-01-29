@@ -7,7 +7,7 @@ import CVCard from "../../../components/admin-panel/CVCard";
 import { getImages } from "../../../libs/data";
 import { updateImages } from "@/libs/admin-panel/actions";
 
-const imagesPage = () => {
+const image = () => {
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState({
     logo: "",
@@ -130,4 +130,4 @@ const imagesPage = () => {
   );
 };
 
-export default imagesPage;
+export default image;

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { getSkills } from "../../../libs/data";
 import { deleteSkill } from "@/libs/admin-panel/actions";
 
-const skillsPage = () => {
+const page = () => {
   const [skills, setSkills] = useState([]);
   useEffect(() => {
     getSkills()
@@ -53,4 +53,4 @@ const skillsPage = () => {
   );
 };
 
-export default skillsPage;
+export default page;

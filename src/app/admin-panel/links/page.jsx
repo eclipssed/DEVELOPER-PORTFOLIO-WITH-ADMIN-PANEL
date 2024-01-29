@@ -7,7 +7,7 @@ import { getLinks } from "../../../libs/data";
 import { updateLinks } from "@/libs/admin-panel/actions";
 import SaveButton from "@/components/admin-panel/SaveButton";
 
-const linksPage = () => {
+const page = () => {
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState({
     github: "",
@@ -71,4 +71,4 @@ const linksPage = () => {
   );
 };
 
-export default linksPage;
+export default page;

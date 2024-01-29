@@ -1,7 +1,7 @@
 import ProjectForm from "../../../../components/admin-panel/ProjectForm";
 import React from "react";
 
-const newPage = () => {
+const page = () => {
   return (
     <section className="wrapper">
       <ProjectForm />
@@ -9,4 +9,4 @@ const newPage = () => {
   );
 };
 
-export default newPage;
+export default page;

@@ -4,7 +4,7 @@ import { getSingleProject } from "@/libs/data";
 import ProjectForm from "../../../../../components/admin-panel/ProjectForm";
 import React, { useEffect, useState } from "react";
 
-const newPage = ({ params }) => {
+const page = ({ params }) => {
   const { _id } = params;
   const [project, setProject] = useState({
     description: "",
@@ -50,4 +50,4 @@ const newPage = ({ params }) => {
   );
 };
 
-export default newPage;
+export default page;

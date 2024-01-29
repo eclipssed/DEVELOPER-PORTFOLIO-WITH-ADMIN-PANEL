@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { deleteProject } from "@/libs/admin-panel/actions";
 
-const projectsPage = () => {
+const page = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -56,4 +56,4 @@ const projectsPage = () => {
   );
 };
 
-export default projectsPage;
+export default page;

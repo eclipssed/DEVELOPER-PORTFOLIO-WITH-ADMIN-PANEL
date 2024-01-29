@@ -22,7 +22,7 @@ const data = [
   { country: "mx", value: 127318112 }, // mexico
 ];
 
-const dashboardPage = async () => {
+const page = async () => {
   const dataWithNewKey = data.map((item) => {
     // Replace "country" key with "code"
     const { value, ...rest } = item;
@@ -77,4 +77,4 @@ const dashboardPage = async () => {
   );
 };
 
-export default dashboardPage;
+export default page;
