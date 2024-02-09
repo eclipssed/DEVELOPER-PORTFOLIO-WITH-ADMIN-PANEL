@@ -13,6 +13,8 @@ import { redirect } from "next/navigation";
 import Education from "@/models/education.model";
 import Experience from "@/models/experience.model";
 import Animation from "@/models/animation.model";
+import { deleteImg, uploadOnCloudinaryServerSide } from "../cloudinaryActions";
+import ImagesCloud from "../../models/imagescloud.model";
 
 connectMongoDB();
 
@@ -36,21 +38,63 @@ export async function updateImages(formData) {
   const hero = formData.get("hero");
   const about = formData.get("about");
   const cv = formData.get("cv");
+  const _id = "65c5d6262e43df1e8d0a4933";
   try {
-    const logoPath = await saveImage(logo);
-    const heroPath = await saveImage(hero);
-    const aboutPath = await saveImage(about);
-    const cvPath = await saveImage(cv);
+    const dbImages = await ImagesCloud.findById({ _id });
+    const logoPublic_id = dbImages.logo.public_id;
+    const heroPublic_id = dbImages.hero.public_id;
+    const aboutPublic_id = dbImages.about.public_id;
+    const cvPublic_id = dbImages.cv.public_id;
+    // // DELETION PHASE
+    const [deletedLogoImg, deletedHeroImg, deletedAboutImg, deletedCvImg] =
+      await Promise.all([
+        deleteImg(logoPublic_id),
+        deleteImg(heroPublic_id),
+        deleteImg(aboutPublic_id),
+        deleteImg(cvPublic_id),
+      ]);
 
-    const imagesObject = {
-      logo: logoPath,
-      hero: heroPath,
-      about: aboutPath,
-      cv: cvPath,
-    };
-    const _id = "658bf1be47935a284ed3588a";
-    await Images.findByIdAndUpdate({ _id }, imagesObject);
-    return true;
+    const [cloudLogo, cloudHero, cloudAbout, cloudcv] = await Promise.all([
+      uploadOnCloudinaryServerSide(logo, "portfolio"),
+      uploadOnCloudinaryServerSide(hero, "portfolio"),
+      uploadOnCloudinaryServerSide(about, "portfolio"),
+      uploadOnCloudinaryServerSide(cv, "portfolio"),
+    ]);
+
+    const imgObj = {};
+    if (cloudLogo) {
+      imgObj.logo = {
+        previewUrl: cloudLogo.secure_url,
+        public_id: cloudLogo.public_id,
+      };
+    }
+    if (cloudHero) {
+      imgObj.hero = {
+        previewUrl: cloudHero.secure_url,
+        public_id: cloudHero.public_id,
+      };
+    }
+    if (cloudAbout) {
+      imgObj.about = {
+        previewUrl: cloudAbout.secure_url,
+        public_id: cloudAbout.public_id,
+      };
+    }
+    if (cloudcv) {
+      imgObj.cv = {
+        previewUrl: cloudcv.secure_url,
+        public_id: cloudcv.public_id,
+      };
+    }
+    if (Object.keys(imgObj).length > 0) {
+      const dbData = await ImagesCloud.findByIdAndUpdate({ _id }, imgObj);
+      console.log(dbData);
+      return dbData;
+    } else {
+      return;
+    }
+
+    revalidatePath("/admin-panel/images");
   } catch (error) {
     console.error("Error updating images:", error);
     throw error;
@@ -111,9 +155,11 @@ export async function createProject(formData) {
   const tags = formData.get("tags");
   const tagsArray = tags.split(",");
   try {
-    const imagePath = await saveImage(image);
+    // const imagePath = await saveImage(image);
+    const imagePath = await uploadOnCloudinaryServerSide(image, "portfolio");
+
     const projedtObject = {
-      image: imagePath,
+      image: imagePath.secure_url,
       title: title,
       description: description,
       githubUrl: githubUrl,
@@ -138,9 +184,10 @@ export async function updateProject(formData) {
   const tags = formData.get("tags");
   const tagsArray = tags.split(",");
   try {
-    const imagePath = await saveImage(image);
+    const imagePath = await uploadOnCloudinaryServerSide(image, "portfolio");
+
     const projectObject = {
-      image: imagePath,
+      image: imagePath.secure_url,
       title: title,
       description: description,
       githubUrl: githubUrl,

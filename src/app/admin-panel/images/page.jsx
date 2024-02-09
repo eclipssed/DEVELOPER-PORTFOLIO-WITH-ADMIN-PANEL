@@ -9,17 +9,76 @@ import { updateImages } from "@/libs/admin-panel/actions";
 
 const ImagesPage = () => {
   const [loading, setLoading] = useState(false);
+  // const [images, setImages] = useState({
+  //   logo: "",
+  //   hero: "",
+  //   about: "",
+  //   cv: "",
+  // });
   const [images, setImages] = useState({
     logo: "",
     hero: "",
     about: "",
     cv: "",
   });
+  const [logo, setLogo] = useState({
+    preview: "",
+    file: "",
+  });
+  const [hero, setHero] = useState({
+    preview: "",
+    file: "",
+  });
+  const [about, setAbout] = useState({
+    preview: "",
+    file: "",
+  });
+  const [cv, setCv] = useState({
+    preview: "",
+    file: "",
+  });
+
+  const handleLogoChange = (e) => {
+    setLogo((prev) => ({
+      ...prev,
+      preview: URL.createObjectURL(e.target.files[0]),
+      file: e.target.files[0],
+    }));
+  };
+  const handleHeroChange = (e) => {
+    setHero((prev) => ({
+      ...prev,
+      preview: URL.createObjectURL(e.target.files[0]),
+      file: e.target.files[0],
+    }));
+  };
+  const handleAboutChange = (e) => {
+    setAbout((prev) => ({
+      ...prev,
+      preview: URL.createObjectURL(e.target.files[0]),
+      file: e.target.files[0],
+    }));
+  };
+  const handleCvChange = (e) => {
+    setCv((prev) => ({
+      ...prev,
+      preview: URL.createObjectURL(e.target.files[0]),
+      file: e.target.files[0],
+    }));
+  };
 
   useEffect(() => {
+    // getImages()
+    //   .then((data) => JSON.parse(data))
+    //   .then((data) => setImages(data));
     getImages()
       .then((data) => JSON.parse(data))
-      .then((data) => setImages(data));
+      .then((data) => {
+        setLogo((prev) => ({ ...prev, preview: data.logo.previewUrl }));
+        setHero((prev) => ({ ...prev, preview: data.hero.previewUrl }));
+        setAbout((prev) => ({ ...prev, preview: data.about.previewUrl }));
+        setCv((prev) => ({ ...prev, preview: data.cv.previewUrl }));
+      });
   }, []);
 
   const handleImageChange = (e) => {
@@ -28,23 +87,22 @@ const ImagesPage = () => {
   };
   const handleUpdateImages = async () => {
     const data = new FormData();
-    data.set("logo", images.logo);
-    data.set("hero", images.hero);
-    data.set("about", images.about);
-    data.set("cv", images.cv);
+    data.set("logo", logo.file);
+    data.set("hero", hero.file);
+    data.set("about", about.file);
+    data.set("cv", cv.file);
     try {
       const res = await updateImages(data);
       if (res) {
         toast.success("Successfully updated images.");
-        setImages({
-          logo: "",
-          hero: "",
-          about: "",
-          cv: "",
-        });
         getImages()
           .then((data) => JSON.parse(data))
-          .then((data) => setImages(data));
+          .then((data) => {
+            setLogo((prev) => ({ ...prev, preview: data.logo.previewUrl }));
+            setHero((prev) => ({ ...prev, preview: data.hero.previewUrl }));
+            setAbout((prev) => ({ ...prev, preview: data.about.previewUrl }));
+            setCv((prev) => ({ ...prev, preview: data.cv.previewUrl }));
+          });
       }
       setLoading(false);
     } catch (error) {
@@ -59,30 +117,33 @@ const ImagesPage = () => {
         onSubmit={() => setLoading(true)}
         className="space-y-8 border-2 border-[#334155] rounded-lg py-4 px-8"
       >
-        <CVCard href={images?.cv} handleFileChange={handleImageChange} />
+        <CVCard href={cv.preview} handleFileChange={handleCvChange} />
         <ImageCard
+          alt="images"
           name={"logo"}
           key={"logo"}
           width={40}
           height={40}
-          src={images?.logo}
-          handleFileChange={handleImageChange}
+          src={logo?.preview}
+          handleFileChange={handleLogoChange}
         />
         <ImageCard
+          alt="images"
           name={"hero"}
           key={"hero"}
           width={200}
           height={200}
-          src={images?.hero}
-          handleFileChange={handleImageChange}
+          src={hero?.preview}
+          handleFileChange={handleHeroChange}
         />
         <ImageCard
+          alt="images"
           name={"about"}
           key={"about"}
           width={200}
           height={200}
-          src={images?.about}
-          handleFileChange={handleImageChange}
+          src={about?.preview}
+          handleFileChange={handleAboutChange}
         />
         <div>
           <button

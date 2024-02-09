@@ -7,6 +7,7 @@ import {
   generateViewersDetails,
   generateVisits,
 } from "@/libs/landing-page/actions";
+import ProgressBarProvider from "../components/ProgressBarProvider";
 // import { getImages } from "@/libs/data";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,8 +35,10 @@ export default function RootLayout({ children }) {
       className="scroll-smooth scrollbar-thin scrollbar-thumb-secondary scrollbar-track-dark scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
     >
       <body className={inter.className}>
-        <Toaster position="top-center" reverseOrder={false} />
-        <CSSVariableProvider>{children}</CSSVariableProvider>
+        <ProgressBarProvider>
+          <Toaster position="top-center" reverseOrder={false} />
+          <CSSVariableProvider>{children}</CSSVariableProvider>
+        </ProgressBarProvider>
       </body>
     </html>
   );

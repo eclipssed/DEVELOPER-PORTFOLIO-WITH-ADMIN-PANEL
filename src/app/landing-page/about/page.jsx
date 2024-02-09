@@ -76,7 +76,7 @@ const AboutPage = () => {
   const updatedTabData = tabData.map((tab) => {
     if (tab.id === "skills") {
       const skillsContent = (
-        <ul key={tab.id} className="list-disc pl-2 ml-2">
+        <ul key={tab.id} className="list-disc pl-2 ml-2 grid grid-cols-2 gap-1">
           {skills.map((item, index) => (
             <li key={item.id}>{item.skill}</li>
           ))}
@@ -109,7 +109,7 @@ const AboutPage = () => {
   });
 
   return (
-    <section id="about" className="text-white">
+    <section id="about" className="text-white mt-32 max-sm:mt-24 ">
       <div
         ref={imageRef}
         className="md:grid md:grid-cols-2 gap-8 xl:gap-16 py-8 px-4 md:items-start md:justify-start sm:py-16 xl:px-16 "

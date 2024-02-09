@@ -14,6 +14,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import Visits from "@/models/visits.model";
 import CountryVisits from "@/models/countryVisits.model";
 import ViewersDetails from "@/models/viewersDetails.model";
+import ImagesCloud from "@/models/imagescloud.model";
 
 connectMongoDB();
 
@@ -100,9 +101,8 @@ export const getSingleExperience = async (_id) => {
 export const getImages = async () => {
   // noStore();
   try {
-    const data = await Images.find();
+    const data = await ImagesCloud.find();
     const images = data[0];
-    // console.log(images);
     const jsonObject = JSON.stringify(images);
 
     return jsonObject;

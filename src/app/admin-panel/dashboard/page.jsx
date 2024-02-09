@@ -41,22 +41,22 @@ const DashboardPage = async () => {
         <VisitsCard visits={visits.mobile} visitsName={"Mobile Visits"} />
         <VisitsCard visits={visits.desktop} visitsName={"Desktop Visits"} />
       </div>
-      <div className="flex gap-2">
-        <div className="flex my-4 rounded-lg gap-2">
-          <div className=" my-2 p-2 bg-slate-200 rounded-lg shadow-md  gap-2">
+      <div className="grid grid-cols-12 gap-4">
+        <div className="flex my-4 rounded-lg gap-2 col-span-8">
+          <div className=" my-2 p-2 bg-slate-200 rounded-lg shadow-md">
             <h2 className="text-lg font-bold text-black rounded-lg bg-slate-400 py-2 px-4 mb-4">
               Recent Viewers Detials
             </h2>
             <ViewersDetailsCard viewersDetails={viewersDetails} />
           </div>
         </div>
-        <div className="flex my-4 rounded-lg">
+        <div className="flex my-4 rounded-lg col-span-4">
           <div className="my-2 p-2 bg-slate-200 rounded-lg shadow-md">
             <h2 className="text-lg font-bold text-black rounded-lg bg-slate-400 py-2 px-4 mb-4">
               Platforms
             </h2>
             <PlatformsCard visits={visits} />
-            <div className="text-center flex justify-between items-center">
+            <div className="text-center flex justify-between items-center gap-4">
               <h2 className="bg-[#0088fe] text-white p-2 rounded-lg">
                 Total: {visits.total}
               </h2>

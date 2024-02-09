@@ -68,7 +68,7 @@ const ContactPage = () => {
   return (
     <section
       id="contact"
-      className="grid md:grid-cols-2 my-12  py-24 gap-4 relative"
+      className="grid md:grid-cols-2 my-12  py-24 gap-4 relative mt-32 max-sm:mt-24 "
     >
       <div className="bg-gradient-radial from-secondary to-transparent rounded-full h-60 w-60 z-0 blur-lg absolute top-full -left-4 transform -translate-x-1/2 -translate-y-1/2"></div>
       <MotionDiv
