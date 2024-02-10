@@ -7,14 +7,14 @@ import Text from "@/models/text.model";
 import Links from "@/models/links.model";
 import Skills from "@/models/skills.model";
 
-import { saveImage } from "@/libs/SaveImage";
 import Projects from "@/models/project.model";
 import { redirect } from "next/navigation";
 import Education from "@/models/education.model";
 import Experience from "@/models/experience.model";
 import Animation from "@/models/animation.model";
 import { deleteImg, uploadOnCloudinaryServerSide } from "../cloudinaryActions";
-import ImagesCloud from "../../models/imagescloud.model";
+import { revalidatePath } from "next/cache";
+// import Images from "../../models/images.model";
 
 connectMongoDB();
 
@@ -38,14 +38,14 @@ export async function updateImages(formData) {
   const hero = formData.get("hero");
   const about = formData.get("about");
   const cv = formData.get("cv");
-  const _id = "65c5d6262e43df1e8d0a4933";
+  const _id = "65c714f3607b959f9c23c026";
   try {
-    const dbImages = await ImagesCloud.findById({ _id });
+    const dbImages = await Images.findById({ _id });
     const logoPublic_id = dbImages.logo.public_id;
     const heroPublic_id = dbImages.hero.public_id;
     const aboutPublic_id = dbImages.about.public_id;
     const cvPublic_id = dbImages.cv.public_id;
-    // // DELETION PHASE
+    // DELETION PHASE
     const [deletedLogoImg, deletedHeroImg, deletedAboutImg, deletedCvImg] =
       await Promise.all([
         deleteImg(logoPublic_id),
@@ -87,14 +87,14 @@ export async function updateImages(formData) {
       };
     }
     if (Object.keys(imgObj).length > 0) {
-      const dbData = await ImagesCloud.findByIdAndUpdate({ _id }, imgObj);
-      console.log(dbData);
+      const dbData = await Images.findByIdAndUpdate({ _id }, imgObj);
+      // const dbData = await Images.create(imgObj);
+      // console.log(dbData);
+      revalidatePath("/admin-panel/images");
       return dbData;
     } else {
       return;
     }
-
-    revalidatePath("/admin-panel/images");
   } catch (error) {
     console.error("Error updating images:", error);
     throw error;

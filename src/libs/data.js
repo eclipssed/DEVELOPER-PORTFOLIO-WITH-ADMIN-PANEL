@@ -5,7 +5,6 @@ import Animation from "../models/animation.model";
 import Colors from "../models/colors.model";
 import Education from "../models/education.model";
 import Experience from "../models/experience.model";
-import Images from "../models/images.model";
 import Links from "../models/links.model";
 import Projects from "../models/project.model";
 import Skills from "../models/skills.model";
@@ -14,7 +13,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import Visits from "@/models/visits.model";
 import CountryVisits from "@/models/countryVisits.model";
 import ViewersDetails from "@/models/viewersDetails.model";
-import ImagesCloud from "@/models/imagescloud.model";
+import Images from "@/models/images.model";
 
 connectMongoDB();
 
@@ -101,7 +100,7 @@ export const getSingleExperience = async (_id) => {
 export const getImages = async () => {
   // noStore();
   try {
-    const data = await ImagesCloud.find();
+    const data = await Images.find();
     const images = data[0];
     const jsonObject = JSON.stringify(images);
 

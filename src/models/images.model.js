@@ -3,16 +3,36 @@ import { Schema, model, models } from "mongoose";
 const ImagesSchema = new Schema(
   {
     logo: {
-      type: String,
+      previewUrl: {
+        type: String,
+      },
+      public_id: {
+        type: String,
+      },
     },
     hero: {
-      type: String,
+      previewUrl: {
+        type: String,
+      },
+      public_id: {
+        type: String,
+      },
     },
     about: {
-      type: String,
+      previewUrl: {
+        type: String,
+      },
+      public_id: {
+        type: String,
+      },
     },
     cv: {
-      type: String,
+      previewUrl: {
+        type: String,
+      },
+      public_id: {
+        type: String,
+      },
     },
   },
   {
