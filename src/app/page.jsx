@@ -37,7 +37,6 @@ export default async function Home() {
     getAnimation().then((data) => JSON.parse(data)),
   ]);
 
-j
   return (
     <main className="flex min-h-screen flex-col justify-between bg-dark ">
       <Navbar />
