@@ -35,11 +35,11 @@ export async function uploadOnCloudinaryClinetSide(img) {
 
 // SERVER SIDE IMAGE UPLOAD TO CLOUDINARY
 export async function uploadOnCloudinaryServerSide(img, folder) {
-  if (img instanceof File) {
+  if (img && typeof img === "object" && (img.path || img.name || img.type)) {
     const buffer = await img.arrayBuffer();
     const bytes = Buffer.from(buffer);
     return new Promise(async (resolve, reject) => {
-      await cloudinaryConfig.uploader
+      cloudinaryConfig.uploader
         .upload_stream(
           {
             resource_type: "auto",

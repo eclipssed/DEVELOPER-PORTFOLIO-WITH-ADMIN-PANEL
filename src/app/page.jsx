@@ -37,6 +37,7 @@ export default async function Home() {
     getAnimation().then((data) => JSON.parse(data)),
   ]);
 
+j
   return (
     <main className="flex min-h-screen flex-col justify-between bg-dark ">
       <Navbar />
@@ -44,12 +45,12 @@ export default async function Home() {
         <HeroSection
           animation={animation}
           heroText={textData.hero}
-          heroImage={imagesData.hero}
-          heroCV={imagesData.cv}
+          heroImage={imagesData.hero.previewUrl}
+          heroCV={imagesData.cv.previewUrl}
         />
         <AchievementsSection />
         <AboutSection
-          aboutImage={imagesData.about}
+          aboutImage={imagesData.about.previewUrl}
           aboutText={textData.about}
           skills={skills}
           education={education}

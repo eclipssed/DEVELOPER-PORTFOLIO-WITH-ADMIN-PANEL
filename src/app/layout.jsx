@@ -1,4 +1,6 @@
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import CSSVariableProvider from "@/components/CSSVariableProvider";
@@ -39,6 +41,8 @@ export default function RootLayout({ children }) {
           <Toaster position="top-center" reverseOrder={false} />
           <CSSVariableProvider>{children}</CSSVariableProvider>
         </ProgressBarProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
