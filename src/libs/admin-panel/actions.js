@@ -88,14 +88,11 @@ export async function updateImages(formData) {
     }
     if (Object.keys(imgObj).length > 0) {
       const dbData = await Images.findByIdAndUpdate({ _id }, imgObj);
-      // const dbData = await Images.create(imgObj);
-      // console.log(dbData);
-      revalidatePath("/admin-panel/images");
       if (dbData) {
         return true;
       }
     } else {
-      return;
+      throw new Error("Couldn't update images.");
     }
   } catch (error) {
     console.error("Error updating images:", error);

@@ -96,9 +96,14 @@ const ImagesPage = () => {
             setAbout((prev) => ({ ...prev, preview: data.about.previewUrl }));
             setCv((prev) => ({ ...prev, preview: data.cv.previewUrl }));
           });
+      } else {
+        toast.error("updateImages function is failed by giving false response.");
       }
       setLoading(false);
     } catch (error) {
+      console.error("Error updating images:", error);
+      toast.error("Failed to update images.");
+      setLoading(false);
       throw error;
     }
   };
