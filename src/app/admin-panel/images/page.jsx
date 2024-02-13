@@ -68,9 +68,6 @@ const ImagesPage = () => {
   };
 
   useEffect(() => {
-    // getImages()
-    //   .then((data) => JSON.parse(data))
-    //   .then((data) => setImages(data));
     getImages()
       .then((data) => JSON.parse(data))
       .then((data) => {
@@ -81,10 +78,6 @@ const ImagesPage = () => {
       });
   }, []);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImages((prev) => ({ ...prev, [e.target.name]: file }));
-  };
   const handleUpdateImages = async () => {
     const data = new FormData();
     data.set("logo", logo.file);

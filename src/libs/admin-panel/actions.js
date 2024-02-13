@@ -91,7 +91,9 @@ export async function updateImages(formData) {
       // const dbData = await Images.create(imgObj);
       // console.log(dbData);
       revalidatePath("/admin-panel/images");
-      return dbData;
+      if (dbData) {
+        return true;
+      }
     } else {
       return;
     }
