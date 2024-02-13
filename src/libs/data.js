@@ -100,7 +100,7 @@ export const getSingleExperience = async (_id) => {
 export const getImages = async () => {
   // noStore();
   try {
-    const data = await Images.find();
+    const data = await Images.find().select("-_id");
     const images = data[0];
     const jsonObject = JSON.stringify(images);
 

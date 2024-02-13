@@ -28,12 +28,14 @@ const ContactPage = () => {
   const textInView = useInView(textRef, { once: true });
 
   useEffect(() => {
-    getLinks()
-      .then((data) => JSON.parse(data))
-      .then((data) => setSocialLinks({ ...data }));
-    getText()
-      .then((data) => JSON.parse(data))
-      .then((data) => setContactText(data.contact));
+    Promise.all([
+      getLinks()
+        .then((data) => JSON.parse(data))
+        .then((data) => setSocialLinks({ ...data })),
+      getText()
+        .then((data) => JSON.parse(data))
+        .then((data) => setContactText(data.contact)),
+    ]);
   });
 
   const textVariants = {

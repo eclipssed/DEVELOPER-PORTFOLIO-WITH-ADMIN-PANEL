@@ -30,8 +30,8 @@ const HeroSection = async ({ animation, heroText, heroImage, heroCV }) => {
             <button className="btn-secondary">
               <a
                 href={heroCV}
-                download={true}
-                className="block bg-dark rounded-full px-5 py-2"
+                download
+                className="block bg-dark rounded-full px-5 py-2 "
               >
                 Download CV
               </a>

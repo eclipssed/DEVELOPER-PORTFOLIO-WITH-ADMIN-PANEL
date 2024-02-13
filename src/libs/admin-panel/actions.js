@@ -6,9 +6,9 @@ import Images from "@/models/images.model";
 import Text from "@/models/text.model";
 import Links from "@/models/links.model";
 import Skills from "@/models/skills.model";
-
 import Projects from "@/models/project.model";
 import { redirect } from "next/navigation";
+import { saveImg } from "../saveImg.js";
 import Education from "@/models/education.model";
 import Experience from "@/models/experience.model";
 import Animation from "@/models/animation.model";
@@ -44,22 +44,22 @@ export async function updateImages(formData) {
     const logoPublic_id = dbImages.logo.public_id;
     const heroPublic_id = dbImages.hero.public_id;
     const aboutPublic_id = dbImages.about.public_id;
-    const cvPublic_id = dbImages.cv.public_id;
     // DELETION PHASE
-    const [deletedLogoImg, deletedHeroImg, deletedAboutImg, deletedCvImg] =
-      await Promise.all([
+    const [deletedLogoImg, deletedHeroImg, deletedAboutImg] = await Promise.all(
+      [
         deleteImg(logoPublic_id),
         deleteImg(heroPublic_id),
         deleteImg(aboutPublic_id),
-        deleteImg(cvPublic_id),
-      ]);
+      ]
+    );
 
-    const [cloudLogo, cloudHero, cloudAbout, cloudcv] = await Promise.all([
+    const [cloudLogo, cloudHero, cloudAbout] = await Promise.all([
       uploadOnCloudinaryServerSide(logo, "portfolio"),
       uploadOnCloudinaryServerSide(hero, "portfolio"),
       uploadOnCloudinaryServerSide(about, "portfolio"),
-      uploadOnCloudinaryServerSide(cv, "portfolio"),
     ]);
+
+    const localPathCV = await saveImg(cv);
 
     const imgObj = {};
     if (cloudLogo) {
@@ -80,10 +80,10 @@ export async function updateImages(formData) {
         public_id: cloudAbout.public_id,
       };
     }
-    if (cloudcv) {
+    if (localPathCV) {
       imgObj.cv = {
-        previewUrl: cloudcv.secure_url,
-        public_id: cloudcv.public_id,
+        previewUrl: localPathCV,
+        public_id: "",
       };
     }
     if (Object.keys(imgObj).length > 0) {

@@ -42,22 +42,24 @@ const AboutPage = () => {
   const textInView = useInView(textRef, { once: true });
 
   useEffect(() => {
-    getSkills()
-      .then((data) => JSON.parse(data))
-      .then((data) => setSkills(data));
-    getEducation()
-      .then((data) => JSON.parse(data))
-      .then((data) => setEducation(data));
-    getExperience()
-      .then((data) => JSON.parse(data))
-      .then((data) => setExperience(data));
-    getImages()
-      .then((data) => JSON.parse(data))
-      .then((data) => setAboutImage(data.about));
-    getText()
-      .then((data) => JSON.parse(data))
-      .then((data) => setAboutText(data.about));
-  });
+    Promise.all([
+      getSkills()
+        .then((data) => JSON.parse(data))
+        .then((data) => setSkills(data)),
+      getEducation()
+        .then((data) => JSON.parse(data))
+        .then((data) => setEducation(data)),
+      getExperience()
+        .then((data) => JSON.parse(data))
+        .then((data) => setExperience(data)),
+      getImages()
+        .then((data) => JSON.parse(data))
+        .then((data) => setAboutImage(data.about.previewUrl)),
+      getText()
+        .then((data) => JSON.parse(data))
+        .then((data) => setAboutText(data.about)),
+    ]);
+  }, []);
 
   const handleActive = (tabName) => {
     setIsActive(tabName);
@@ -78,7 +80,7 @@ const AboutPage = () => {
       const skillsContent = (
         <ul key={tab.id} className="list-disc pl-2 ml-2 grid grid-cols-2 gap-1">
           {skills.map((item, index) => (
-            <li key={item.id}>{item.skill}</li>
+            <li key={index}>{item.skill}</li>
           ))}
         </ul>
       );
@@ -88,7 +90,7 @@ const AboutPage = () => {
       const experienceContent = (
         <ul className="list-disc pl-2 ml-2">
           {experience.map((item, index) => (
-            <li key={item.id}>{item.experience}</li>
+            <li key={index}>{item.experience}</li>
           ))}
         </ul>
       );
@@ -98,7 +100,7 @@ const AboutPage = () => {
       const educationContent = (
         <ul className="list-disc pl-2 ml-2">
           {education.map((item, index) => (
-            <li key={item.id}>{item.education}</li>
+            <li key={index}>{item.education}</li>
           ))}
         </ul>
       );
