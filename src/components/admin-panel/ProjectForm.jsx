@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import ProjectFormInput from "./ProjectFormInput";
 import { createProject, updateProject } from "@/libs/admin-panel/actions";
 import SaveButton from "./SaveButton";
+import { useRouter } from "next/navigation";
 
 const ProjectForm = ({
   editProject,
@@ -21,6 +22,8 @@ const ProjectForm = ({
     previewUrl: "",
     tags: [],
   });
+
+  const router = useRouter();
 
   const handleImagechange = (e) => {
     const file = e.target.files[0];
@@ -43,8 +46,13 @@ const ProjectForm = ({
     data.set("previewUrl", project.previewUrl);
     data.set("tags", project.tags);
     try {
-      await createProject(data);
-      toast.success("successfully created new project.");
+      const res = await createProject(data);
+      if (res) {
+        toast.success("successfully created new project.");
+        router.push("/admin-panel/projects");
+      } else {
+        toast.error("Failed creating new project.");
+      }
     } catch (error) {
       console.log("Error while creating project: ", error);
       toast.error("Error while creating project.");
@@ -61,8 +69,13 @@ const ProjectForm = ({
     data.set("tags", editProject.tags);
     data.set("_id", editProject._id);
     try {
-      await updateProject(data);
-      toast.success("successfully updated project.");
+      const res = await updateProject(data);
+      if (res) {
+        toast.success("successfully updated project.");
+        router.push("/admin-panel/projects");
+      } else {
+        toast.error("Failed updating project.");
+      }
     } catch (error) {
       console.log("Error while updating project: ", error);
       toast.error("Error while updating project.");

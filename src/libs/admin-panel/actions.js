@@ -87,12 +87,13 @@ export async function updateImages(formData) {
       };
     }
     if (Object.keys(imgObj).length > 0) {
-      const dbData = await Images.findByIdAndUpdate({ _id }, imgObj);
-      if (dbData) {
-        return true;
+      const updatedImages = await Images.findByIdAndUpdate({ _id }, imgObj);
+      if (updatedImages) {
+        const updatedImagesObj = JSON.stringify(updatedImages);
+        return updatedImagesObj;
+      } else {
+        throw new Error("Couldn't update images.");
       }
-    } else {
-      throw new Error("Couldn't update images.");
     }
   } catch (error) {
     console.error("Error updating images:", error);
@@ -165,12 +166,17 @@ export async function createProject(formData) {
       previewUrl: previewUrl,
       tags: tagsArray,
     };
-    await Projects.create(projedtObject);
+    const createdProject = await Projects.create(projedtObject);
+    if (createdProject) {
+      const createdProjectObj = JSON.stringify(createdProject);
+      return createdProjectObj;
+    } else {
+      throw new Error("Couldn't create new Project.");
+    }
   } catch (error) {
     console.error("Error creating project:", error);
     throw error;
   }
-  redirect("/admin-panel/projects");
 }
 // UPDATE PROJECT
 export async function updateProject(formData) {
@@ -193,12 +199,20 @@ export async function updateProject(formData) {
       previewUrl: previewUrl,
       tags: tagsArray,
     };
-    await Projects.findByIdAndUpdate({ _id }, projectObject);
+    const updatedProject = await Projects.findByIdAndUpdate(
+      { _id },
+      projectObject
+    );
+    if (updatedProject) {
+      const updatedProjectObj = JSON.stringify(updatedProject);
+      return updatedProjectObj;
+    } else {
+      throw new Error("Couldn't create new Project.");
+    }
   } catch (error) {
     console.error("Error creating project:", error);
     throw error;
   }
-  redirect("/admin-panel/projects");
 }
 // DELETE PROJECT
 export async function deleteProject(_id) {

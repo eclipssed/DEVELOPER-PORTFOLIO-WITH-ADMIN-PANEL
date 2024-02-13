@@ -10,21 +10,12 @@ import {
   generateVisits,
 } from "@/libs/landing-page/actions";
 import ProgressBarProvider from "../components/ProgressBarProvider";
-// import { getImages } from "@/libs/data";
 const inter = Inter({ subsets: ["latin"] });
-
-// const images = await getImages().then((data) => JSON.parse(data));
-// const logo = images.logo.slice(8);
-// console.log(logo);
 
 export const metadata = {
   title: "Furqan",
   description:
     "My name is Furqan and I am a full stack developer. I have working experience in react js, node.js and next.js",
-  icons: {
-    icon: "/icon.png",
-    // icon: {logo} // it doesn't work coz it rquires the name of the image to be icon.png
-  },
 };
 
 export default function RootLayout({ children }) {
