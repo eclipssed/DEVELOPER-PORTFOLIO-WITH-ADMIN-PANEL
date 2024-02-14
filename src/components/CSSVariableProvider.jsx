@@ -26,7 +26,7 @@ const CSSVariableProvider = ({ children }) => {
         setLoading(false);
       })
       .catch((err) => console.log(err));
-  }, [colors.dark, colors.primary, colors.secondary, colors.light]);
+  }, []);
 
   // console.log(colors);
   if (loading) {

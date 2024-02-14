@@ -8,6 +8,7 @@ const cloudinaryConfig = {
   api_secret: process.env.CLOUDINARY_API_SECRET,
 };
 
+
 // Configure the Cloudinary library with your credentials
 cloudinaryV2.config(cloudinaryConfig);
 
