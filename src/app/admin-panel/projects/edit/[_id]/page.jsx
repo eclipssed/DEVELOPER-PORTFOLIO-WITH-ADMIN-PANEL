@@ -22,7 +22,6 @@ const EditProjectsPage = ({ params }) => {
       .then((data) => setProject(data));
   }, [_id]);
 
-  // console.log(project);
 
   const handleImagechange = (e) => {
     const file = e.target.files[0];
@@ -32,7 +31,6 @@ const EditProjectsPage = ({ params }) => {
       const result = reader.result;
       setProject((prev) => ({ ...prev, [e.target.name]: result }));
     };
-    // const file = e.target.files[0];
   };
   const handleTextchange = (e) => {
     setProject((prev) => ({ ...prev, [e.target.name]: e.target.value }));

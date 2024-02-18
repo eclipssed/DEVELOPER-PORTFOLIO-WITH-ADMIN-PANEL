@@ -27,7 +27,12 @@ const ProjectForm = ({
 
   const handleImagechange = (e) => {
     const file = e.target.files[0];
-    setProject((prev) => ({ ...prev, [e.target.name]: file }));
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result = reader.result;
+      setProject((prev) => ({ ...prev, [e.target.name]: result }));
+    };
   };
   const handleTextchange = (e) => {
     setProject((prev) => ({ ...prev, [e.target.name]: e.target.value }));

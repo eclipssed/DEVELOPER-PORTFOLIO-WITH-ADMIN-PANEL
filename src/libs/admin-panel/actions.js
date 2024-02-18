@@ -8,13 +8,11 @@ import Links from "@/models/links.model";
 import Skills from "@/models/skills.model";
 import Projects from "@/models/project.model";
 import { redirect } from "next/navigation";
-import { saveImg } from "../saveImg.js";
 import Education from "@/models/education.model";
 import Experience from "@/models/experience.model";
 import Animation from "@/models/animation.model";
-import { cloudinaryUpload, deleteImg, uploadOnCloudinaryServerSide } from "../cloudinaryActions";
+import { cloudinaryUpload } from "../cloudinaryActions";
 import { revalidatePath } from "next/cache";
-// import Images from "../../models/images.model";
 
 connectMongoDB();
 
@@ -37,63 +35,26 @@ export async function updateImages(formData) {
   const logo = formData.get("logo");
   const hero = formData.get("hero");
   const about = formData.get("about");
-  const cv = formData.get("cv");
-  const _id = "65c714f3607b959f9c23c026";
+  const _id = "65d1b25b46fd7b562be69057";
   try {
-    const dbImages = await Images.findById({ _id });
-    const logoPublic_id = dbImages.logo.public_id;
-    const heroPublic_id = dbImages.hero.public_id;
-    const aboutPublic_id = dbImages.about.public_id;
-    // DELETION PHASE
-    const [deletedLogoImg, deletedHeroImg, deletedAboutImg] = await Promise.all(
-      [
-        deleteImg(logoPublic_id),
-        deleteImg(heroPublic_id),
-        deleteImg(aboutPublic_id),
-      ]
-    );
+    const cloudLogo = await cloudinaryUpload(logo);
+    const cloudHero = await cloudinaryUpload(hero);
+    const cloudAbout = await cloudinaryUpload(about);
 
-    const [cloudLogo, cloudHero, cloudAbout] = await Promise.all([
-      uploadOnCloudinaryServerSide(logo, "portfolio"),
-      uploadOnCloudinaryServerSide(hero, "portfolio"),
-      uploadOnCloudinaryServerSide(about, "portfolio"),
-    ]);
+    // console.log(cloudLogo, cloudHero, cloudAbout);
 
-    const localPathCV = await saveImg(cv);
+    const imgObj = {
+      logo: cloudLogo?.secure_url || cloudLogo,
+      hero: cloudHero?.secure_url || cloudHero,
+      about: cloudAbout?.secure_url || cloudAbout,
+    };
 
-    const imgObj = {};
-    if (cloudLogo) {
-      imgObj.logo = {
-        previewUrl: cloudLogo.secure_url,
-        public_id: cloudLogo.public_id,
-      };
-    }
-    if (cloudHero) {
-      imgObj.hero = {
-        previewUrl: cloudHero.secure_url,
-        public_id: cloudHero.public_id,
-      };
-    }
-    if (cloudAbout) {
-      imgObj.about = {
-        previewUrl: cloudAbout.secure_url,
-        public_id: cloudAbout.public_id,
-      };
-    }
-    if (localPathCV) {
-      imgObj.cv = {
-        previewUrl: localPathCV,
-        public_id: "",
-      };
-    }
-    if (Object.keys(imgObj).length > 0) {
-      const updatedImages = await Images.findByIdAndUpdate({ _id }, imgObj);
-      if (updatedImages) {
-        const updatedImagesObj = JSON.stringify(updatedImages);
-        return updatedImagesObj;
-      } else {
-        throw new Error("Couldn't update images.");
-      }
+    const updatedImages = await Images.findByIdAndUpdate({ _id }, imgObj);
+    if (updatedImages) {
+      const updatedImagesObj = JSON.stringify(updatedImages);
+      return updatedImagesObj;
+    } else {
+      throw new Error("Couldn't update images.");
     }
   } catch (error) {
     console.error("Error updating images:", error);
@@ -155,11 +116,10 @@ export async function createProject(formData) {
   const tags = formData.get("tags");
   const tagsArray = tags.split(",");
   try {
-    // const imagePath = await saveImage(image);
-    const imagePath = await uploadOnCloudinaryServerSide(image, "portfolio");
+    const data = await cloudinaryUpload(image);
 
     const projedtObject = {
-      image: imagePath.secure_url,
+      image: data.secure_url,
       title: title,
       description: description,
       githubUrl: githubUrl,
@@ -190,8 +150,6 @@ export async function updateProject(formData) {
   const tagsArray = tags.split(",");
   try {
     const data = await cloudinaryUpload(image);
-    // console.log(data);
-    // const data = await uploadOnCloudinaryServerSide(image, "portfolio");
 
     const projectObject = {
       image: data.secure_url,
