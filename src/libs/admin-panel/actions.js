@@ -12,7 +12,7 @@ import { saveImg } from "../saveImg.js";
 import Education from "@/models/education.model";
 import Experience from "@/models/experience.model";
 import Animation from "@/models/animation.model";
-import { deleteImg, uploadOnCloudinaryServerSide } from "../cloudinaryActions";
+import { cloudinaryUpload, deleteImg, uploadOnCloudinaryServerSide } from "../cloudinaryActions";
 import { revalidatePath } from "next/cache";
 // import Images from "../../models/images.model";
 
@@ -189,10 +189,12 @@ export async function updateProject(formData) {
   const tags = formData.get("tags");
   const tagsArray = tags.split(",");
   try {
-    const imagePath = await uploadOnCloudinaryServerSide(image, "portfolio");
+    const data = await cloudinaryUpload(image);
+    // console.log(data);
+    // const data = await uploadOnCloudinaryServerSide(image, "portfolio");
 
     const projectObject = {
-      image: imagePath.secure_url,
+      image: data.secure_url,
       title: title,
       description: description,
       githubUrl: githubUrl,

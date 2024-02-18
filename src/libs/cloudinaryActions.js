@@ -75,3 +75,16 @@ export async function deleteImg(public_id) {
     }
   });
 }
+
+export async function cloudinaryUpload(img) {
+  try {
+    const res = await cloudinaryConfig.uploader.upload(img, {
+      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+      folder: process.env.CLOUDINARY_UPLOAD_FOLDER,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
