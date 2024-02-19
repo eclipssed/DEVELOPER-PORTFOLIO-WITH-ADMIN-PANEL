@@ -29,8 +29,8 @@ const HeroSection = async ({ animation, heroText, heroImage, heroCV }) => {
             </Link>
             <button className="btn-secondary">
               <a
-                href={heroCV}
-                download
+                href={"/muhammadFurqanCV.pdf"}
+                download={true}
                 className="block bg-dark rounded-full px-5 py-2 "
               >
                 Download CV

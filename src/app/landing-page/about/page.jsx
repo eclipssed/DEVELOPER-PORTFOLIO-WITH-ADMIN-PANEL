@@ -54,7 +54,7 @@ const AboutPage = () => {
         .then((data) => setExperience(data)),
       getImages()
         .then((data) => JSON.parse(data))
-        .then((data) => setAboutImage(data.about.previewUrl)),
+        .then((data) => setAboutImage(data.about)),
       getText()
         .then((data) => JSON.parse(data))
         .then((data) => setAboutText(data.about)),

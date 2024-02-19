@@ -74,7 +74,7 @@ const adminOptions = [
     id: "achievements",
     link: "/admin-panel/achievements",
     icon: <MdOutlineAnimation />,
-    title: "Animations",
+    title: "Achievements",
   },
 ];
 
