@@ -49,12 +49,12 @@ const AboutSection = ({
   };
 
   // Updataed TabData
-  const updatedTabData = tabData.map((tab) => {
+  const updatedTabData = tabData.map((tab, index) => {
     if (tab.id === "skills") {
       const skillsContent = (
-        <ul key={tab.id} className="list-disc pl-2 ml-2 grid grid-cols-2 gap-1">
+        <ul key={index} className="list-disc pl-2 ml-2 grid grid-cols-2 gap-1">
           {skills.map((item, index) => (
-            <li key={item.id}>{item.skill}</li>
+            <li key={index}>{item.skill}</li>
           ))}
         </ul>
       );
@@ -62,9 +62,9 @@ const AboutSection = ({
       return { ...tab, content: skillsContent };
     } else if (tab.id === "experience") {
       const experienceContent = (
-        <ul className="list-disc pl-2 ml-2">
+        <ul key={index} className="list-disc pl-2 ml-2">
           {experience.map((item, index) => (
-            <li key={item.id}>{item.experience}</li>
+            <li key={index}>{item.experience}</li>
           ))}
         </ul>
       );
@@ -72,9 +72,9 @@ const AboutSection = ({
       return { ...tab, content: experienceContent };
     } else if (tab.id === "education") {
       const educationContent = (
-        <ul className="list-disc pl-2 ml-2">
+        <ul key={index} className="list-disc pl-2 ml-2">
           {education.map((item, index) => (
-            <li key={item.id}>{item.education}</li>
+            <li key={index}>{item.education}</li>
           ))}
         </ul>
       );

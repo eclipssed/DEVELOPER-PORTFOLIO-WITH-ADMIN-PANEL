@@ -15,7 +15,7 @@ const CVCard = ({ href, handleFileChange }) => {
           Download CV
         </a>
       </button>
-      {/* <div>
+      <div>
         <label className="btn cursor-pointer">
           <input
             type="file"
@@ -25,7 +25,7 @@ const CVCard = ({ href, handleFileChange }) => {
           />
           <span>Update</span>
         </label>
-      </div> */}
+      </div>
     </div>
   );
 };

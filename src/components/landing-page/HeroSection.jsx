@@ -3,7 +3,7 @@ import { MotionDiv } from "@/components/MotionDiv";
 import Link from "next/link";
 import AnimationCard from "../../components/landing-page/AnimationCard";
 
-const HeroSection = async ({ animation, heroText, heroImage, heroCV }) => {
+const HeroSection = async ({ animation, heroText, heroImage }) => {
   return (
     <section className="lg:py-8 max-sm:px-0 mt-32 max-sm:mt-24 mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-12">

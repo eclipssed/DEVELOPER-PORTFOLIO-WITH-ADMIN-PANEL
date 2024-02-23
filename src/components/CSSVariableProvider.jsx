@@ -32,7 +32,7 @@ const CSSVariableProvider = ({ children }) => {
   if (loading) {
     return;
   }
-  return <div>{children}</div>;
+  return <section>{children}</section>;
 };
 
 export default CSSVariableProvider;

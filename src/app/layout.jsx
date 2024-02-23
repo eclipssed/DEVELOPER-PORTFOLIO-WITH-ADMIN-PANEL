@@ -10,6 +10,7 @@ import {
   generateVisits,
 } from "@/libs/landing-page/actions";
 import ProgressBarProvider from "../components/ProgressBarProvider";
+import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -28,10 +29,12 @@ export default function RootLayout({ children }) {
       className="scroll-smooth scrollbar-thin scrollbar-thumb-secondary scrollbar-track-dark scrollbar-track-rounded scrollbar-thumb-rounded overflow-x-hidden"
     >
       <body className={inter.className}>
-        <ProgressBarProvider>
-          <Toaster position="top-center" reverseOrder={false} />
-          <CSSVariableProvider>{children}</CSSVariableProvider>
-        </ProgressBarProvider>
+        <Toaster position="top-center" reverseOrder={false} />
+        <CSSVariableProvider>
+          <Suspense>
+            <ProgressBarProvider>{children}</ProgressBarProvider>
+          </Suspense>
+        </CSSVariableProvider>
         <Analytics />
         <SpeedInsights />
       </body>

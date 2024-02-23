@@ -1,9 +1,9 @@
-import React from 'react'
+"use client";
+
+import React from "react";
 
 const AchievementsPage = () => {
-  return (
-    <div>AchievementsPage</div>
-  )
-}
+  return <div>AchievementsPage</div>;
+};
 
-export default AchievementsPage
+export default AchievementsPage;
