@@ -92,12 +92,12 @@ const Navbar = () => {
         <div className="md:hidden block text-center">
           {isMenuOpen && (
             <div
-              className={` bg-dark w-full bg-opacity-70 ${
+              className={` bg-dark w-full opacity-90 ${
                 isMenuOpen ? "border-b" : ""
               } absolute p-4 z-10`}
             >
               {isMenuOpen && (
-                <ul>
+                <ul className="space-y-6">
                   {navLinks.map((link, index) => (
                     <li key={index} onClick={toggleMenu}>
                       <NavLink href={link.href} title={link.title} />
