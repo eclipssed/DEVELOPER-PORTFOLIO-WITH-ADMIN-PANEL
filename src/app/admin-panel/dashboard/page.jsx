@@ -9,7 +9,6 @@ import {
 import WorldMapCard from "../../../components/admin-panel/WorldMapCard";
 
 const data = [
-  // [...countries],
   { country: "cn", value: 1389618778 }, // china
   { country: "in", value: 1311559204 }, // india
   { country: "us", value: 331883986 }, // united states
@@ -24,11 +23,10 @@ const data = [
 
 const DashboardPage = async () => {
   const dataWithNewKey = data.map((item) => {
-    // Replace "country" key with "code"
     const { value, ...rest } = item;
     return { count: value, ...rest };
   });
-  // console.log(dataWithNewKey);
+
   const [visits, countryVisits, viewersDetails] = await Promise.all([
     getVisits().then((data) => JSON.parse(data)),
     getCountryVisits().then((data) => JSON.parse(data)),

@@ -1,32 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import { MotionDiv } from "@/components/MotionDiv";
 import Link from "next/link";
 import AnimationCard from "../../components/landing-page/AnimationCard";
-import downloadImage from "../../libs/downloadImage";
 
-function arrayBufferToBase64(buffer) {
-  let binary = "";
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
-
-const handleCVDownload = async () => {
-  const response = await fetch("/muhammadFurqanCV.pdf");
-  if (!response.ok) {
-    throw new Error("Failed to fetch PDF file");
-  }
-  const pdfBuffer = await response.arrayBuffer();
-  const pdfBase64String = arrayBufferToBase64(pdfBuffer);
-  downloadImage(pdfBase64String);
-};
-
-const HeroSection = ({ animation, heroText, heroImage }) => {
+const HeroSection = async ({ animation, heroText, heroImage }) => {
   return (
     <section className="lg:py-8 max-sm:px-0 mt-32 max-sm:mt-24 mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-12">
@@ -50,10 +27,14 @@ const HeroSection = ({ animation, heroText, heroImage }) => {
             <Link href="#contact">
               <button className="btn-primary">Hire Me</button>
             </Link>
-            <button onClick={handleCVDownload} className="btn-secondary">
-              <span className="block bg-dark rounded-full px-5 py-2 ">
+            <button className="btn-secondary">
+              <a
+                href={"/muhammadFurqanCV.pdf"}
+                download={true}
+                className="block bg-dark rounded-full px-5 py-2 "
+              >
                 Download CV
-              </span>
+              </a>
             </button>
           </div>
         </MotionDiv>

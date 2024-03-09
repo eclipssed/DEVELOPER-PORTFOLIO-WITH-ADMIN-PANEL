@@ -20,9 +20,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  generateVisits();
-  generateCountryVisits();
-  generateViewersDetails();
+  // generateVisits();
+  // generateCountryVisits();
+  // generateViewersDetails();
   return (
     <html
       lang="en"
